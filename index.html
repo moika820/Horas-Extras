@@ -13,7 +13,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js">
     </script>
 
-    <!-- FontAwesome 6 -->
+    <!-- FontAwesome 6 (solo iconos, sin emojis) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <!-- Chart.js -->
@@ -25,9 +25,7 @@
     </script>
 
     <style>
-        /* ================================================================
-                   RESET Y VARIABLES
-                   ================================================================ */
+        /* ===== RESET Y VARIABLES ===== */
         * {
             margin: 0;
             padding: 0;
@@ -63,7 +61,6 @@
             --pastel-lavender: #e8e0f0;
         }
 
-        /* Modo oscuro */
         body.dark-mode {
             --bg-body: #121826;
             --bg-sidebar: #0d1420;
@@ -84,7 +81,6 @@
             --pastel-lavender: #2a1e3a;
         }
 
-        /* Modo blanco y negro */
         body.bw-mode {
             --bg-body: #f0f0f0;
             --bg-sidebar: #333;
@@ -275,36 +271,24 @@
             animation: sunGlow 3s infinite alternate;
         }
         @keyframes sunGlow {
-            0% {
-                filter: drop-shadow(0 0 2px #ffaa00);
-            }
-            100% {
-                filter: drop-shadow(0 0 12px #ffaa00) drop-shadow(0 0 20px #ff8800);
-            }
+            0% { filter: drop-shadow(0 0 2px #ffaa00); }
+            100% { filter: drop-shadow(0 0 12px #ffaa00) drop-shadow(0 0 20px #ff8800); }
         }
         .btn-dark-toggle .moon {
             display: inline-block;
             animation: moonGlow 4s infinite alternate;
         }
         @keyframes moonGlow {
-            0% {
-                filter: drop-shadow(0 0 2px #aaccff);
-            }
-            100% {
-                filter: drop-shadow(0 0 12px #aaccff) drop-shadow(0 0 20px #88aaff);
-            }
+            0% { filter: drop-shadow(0 0 2px #aaccff); }
+            100% { filter: drop-shadow(0 0 12px #aaccff) drop-shadow(0 0 20px #88aaff); }
         }
         .btn-dark-toggle .yin-yang {
             display: inline-block;
             animation: spinYinYang 6s linear infinite;
         }
         @keyframes spinYinYang {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .btn-logout {
@@ -334,14 +318,8 @@
             display: block;
         }
         @keyframes fadeSlide {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .panel-header {
@@ -567,9 +545,7 @@
             border-top: 1px solid rgba(0, 0, 0, 0.06);
         }
 
-        /* ================================================================
-                   LOGIN - CORREGIDO (z-index alto, posicionamiento fijo)
-                   ================================================================ */
+        /* ===== LOGIN ===== */
         .login-container {
             display: none;
             position: fixed;
@@ -621,10 +597,7 @@
             display: none;
         }
 
-        /* ================================================================ */
-        /* ===== PANEL CALENDARIO Y PRESTACIONES ===== */
-        /* ================================================================ */
-
+        /* ===== PANEL CALENDARIO ===== */
         .calendar-nav {
             display: flex;
             justify-content: space-between;
@@ -766,21 +739,11 @@
             height: 14px;
             border-radius: 50%;
         }
-        .legend-dot.blue {
-            background: #2a6fdb;
-        }
-        .legend-dot.green {
-            background: #28a745;
-        }
-        .legend-dot.orange {
-            background: #fd7e14;
-        }
-        .legend-dot.purple {
-            background: #6f42c1;
-        }
-        .legend-dot.red {
-            background: #dc3545;
-        }
+        .legend-dot.blue { background: #2a6fdb; }
+        .legend-dot.green { background: #28a745; }
+        .legend-dot.orange { background: #fd7e14; }
+        .legend-dot.purple { background: #6f42c1; }
+        .legend-dot.red { background: #dc3545; }
 
         .month-summary {
             display: grid;
@@ -829,27 +792,13 @@
         .ley-tabs .tab-btn.active {
             color: #fff;
         }
-        .ley-tabs .tab-btn.azul.active {
-            background: #2a6fdb;
-        }
-        .ley-tabs .tab-btn.verde.active {
-            background: #28a745;
-        }
-        .ley-tabs .tab-btn.naranja.active {
-            background: #fd7e14;
-        }
-        .ley-tabs .tab-btn.morado.active {
-            background: #6f42c1;
-        }
-        .ley-tabs .tab-btn.rosa.active {
-            background: #e83e8c;
-        }
-        .ley-tabs .tab-btn.melocoton.active {
-            background: #fd7e14;
-        }
-        .ley-tabs .tab-btn.rojo.active {
-            background: #dc3545;
-        }
+        .ley-tabs .tab-btn.azul.active { background: #2a6fdb; }
+        .ley-tabs .tab-btn.verde.active { background: #28a745; }
+        .ley-tabs .tab-btn.naranja.active { background: #fd7e14; }
+        .ley-tabs .tab-btn.morado.active { background: #6f42c1; }
+        .ley-tabs .tab-btn.rosa.active { background: #e83e8c; }
+        .ley-tabs .tab-btn.melocoton.active { background: #fd7e14; }
+        .ley-tabs .tab-btn.rojo.active { background: #dc3545; }
 
         .ley-content {
             background: var(--bg-card);
@@ -958,87 +907,31 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .sidebar {
-                transform: translateX(-100%);
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .hamburger {
-                display: block;
-            }
-            .main-content {
-                margin-left: 0;
-                padding: 20px 16px;
-            }
-            .topbar {
-                margin-top: 60px;
-            }
-            .calendar-grid .day-cell {
-                min-height: 40px;
-                font-size: 0.8rem;
-            }
-            .calendar-grid .day-cell .day-emoji {
-                font-size: 0.9rem;
-            }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .hamburger { display: block; }
+            .main-content { margin-left: 0; padding: 20px 16px; }
+            .topbar { margin-top: 60px; }
+            .calendar-grid .day-cell { min-height: 40px; font-size: 0.8rem; }
+            .calendar-grid .day-cell .day-emoji { font-size: 0.9rem; }
         }
         @media (max-width: 576px) {
-            .topbar {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 10px;
-            }
-            .topbar-right {
-                justify-content: space-between;
-            }
-            .calendar-grid {
-                gap: 4px;
-                padding: 8px;
-            }
-            .calendar-grid .day-cell {
-                min-height: 34px;
-                font-size: 0.7rem;
-                border-radius: 8px;
-            }
-            .calendar-grid .day-cell .day-dot {
-                width: 5px;
-                height: 5px;
-            }
-            .calendar-grid .day-cell .day-emoji {
-                font-size: 0.7rem;
-                top: 1px;
-                right: 2px;
-            }
-            .month-summary {
-                grid-template-columns: 1fr 1fr;
-            }
-            .ley-tabs .tab-btn {
-                padding: 6px 14px;
-                font-size: 0.8rem;
-            }
+            .topbar { flex-direction: column; align-items: stretch; gap: 10px; }
+            .topbar-right { justify-content: space-between; }
+            .calendar-grid { gap: 4px; padding: 8px; }
+            .calendar-grid .day-cell { min-height: 34px; font-size: 0.7rem; border-radius: 8px; }
+            .calendar-grid .day-cell .day-dot { width: 5px; height: 5px; }
+            .calendar-grid .day-cell .day-emoji { font-size: 0.7rem; top: 1px; right: 2px; }
+            .month-summary { grid-template-columns: 1fr 1fr; }
+            .ley-tabs .tab-btn { padding: 6px 14px; font-size: 0.8rem; }
         }
 
-        /* ===== UTILIDADES ===== */
-        .text-muted {
-            color: var(--text-secondary);
-        }
-        .mt-2 {
-            margin-top: 16px;
-        }
-        .mb-2 {
-            margin-bottom: 16px;
-        }
-        .flex {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .hidden {
-            display: none !important;
-        }
-        .text-center {
-            text-align: center;
-        }
+        .text-muted { color: var(--text-secondary); }
+        .mt-2 { margin-top: 16px; }
+        .mb-2 { margin-bottom: 16px; }
+        .flex { display: flex; gap: 12px; flex-wrap: wrap; }
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
     </style>
 </head>
 <body>
@@ -1096,12 +989,12 @@
         </header>
 
         <!-- ================================================================ -->
-        <!-- PANEL: CALENDARIO Y PRESTACIONES -->
+        <!-- PANEL: CALENDARIO Y PRESTACIONES (contenido real) -->
         <!-- ================================================================ -->
         <section class="panel active" id="panel-calendario">
             <div class="panel-header">
                 <div>
-                    <h1>📅 Calendario y Prestaciones Laborales</h1>
+                    <h1>Calendario y Prestaciones Laborales</h1>
                     <p>Feriados, vacaciones, deducciones de ley y derechos laborales de El Salvador</p>
                 </div>
                 <div>
@@ -1162,11 +1055,11 @@
                     <div class="ley-titulo"><i class="fas fa-umbrella-beach" style="color:#28a745;"></i> Vacaciones</div>
                     <div class="ley-sub">Derecho a 15 días hábiles de vacaciones por año laborado (Art. 65 del Código de Trabajo).</div>
                     <div class="ley-seccion">
-                        <h4>📖 Base legal</h4>
+                        <h4>Base legal</h4>
                         <p>Artículo 65 del Código de Trabajo de El Salvador, vigente desde 1949, reformado por Decreto N° 234 (2018) que establece 15 días hábiles por año laborado.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🧮 Calculadora de vacaciones</h4>
+                        <h4>Calculadora de vacaciones</h4>
                         <p>Ingresa tu fecha de ingreso y te diremos cuántos días de vacaciones tienes disponibles.</p>
                         <div class="flex" style="align-items:center; gap:16px;">
                             <div class="form-group" style="flex:1; max-width:250px;">
@@ -1180,7 +1073,7 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📋 Tabla de empleados con días disponibles</h4>
+                        <h4>Tabla de empleados con días disponibles</h4>
                         <div class="table-responsive">
                             <table>
                                 <thead><tr><th>Empleado</th><th>Antigüedad</th><th>Días disponibles</th><th>Próxima fecha sugerida</th></tr></thead>
@@ -1197,30 +1090,30 @@
                     <div class="ley-titulo"><i class="fas fa-notes-medical" style="color:#fd7e14;"></i> ISSS - Instituto Salvadoreño del Seguro Social</div>
                     <div class="ley-sub">Protección social en salud, maternidad, riesgos profesionales y prestaciones económicas.</div>
                     <div class="ley-seccion">
-                        <h4>📖 Base legal</h4>
+                        <h4>Base legal</h4>
                         <p>Artículo 45 del Código de Trabajo de El Salvador, Decreto Legislativo N° 123 (2020). Vigencia desde el 1 de enero de 1949, con reformas en 1990, 2005, 2018 y 2020.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>❓ ¿Qué es?</h4>
+                        <h4>¿Qué es?</h4>
                         <p>Es una institución autónoma que brinda protección social en salud, maternidad, riesgos profesionales y prestaciones económicas a los trabajadores y sus familias.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🎯 ¿Para qué sirve?</h4>
+                        <h4>¿Para qué sirve?</h4>
                         <p>Para garantizar atención médica integral, medicamentos, subsidios por incapacidad, maternidad y protección ante accidentes laborales.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>👥 ¿A quiénes aplica?</h4>
+                        <h4>¿A quiénes aplica?</h4>
                         <p>A todos los trabajadores del sector privado y público que tengan un contrato laboral y estén afiliados. También a los trabajadores independientes que se inscriban voluntariamente.</p>
-                        <p><strong>❌ No aplica:</strong> Trabajadores informales sin contrato, o aquellos que no han sido afiliados por su empleador (en este caso, el empleador incumple la ley).</p>
+                        <p><strong>No aplica:</strong> Trabajadores informales sin contrato, o aquellos que no han sido afiliados por su empleador (en este caso, el empleador incumple la ley).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>💰 Cotización</h4>
+                        <h4>Cotización</h4>
                         <ul>
                             <li><strong>Trabajador:</strong> 3.0% del salario base mensual (se descuenta de su sueldo).</li>
                             <li><strong>Empleador:</strong> 4.5% del salario base mensual (pago adicional).</li>
                         </ul>
                         <div class="ejemplo">
-                            <p><strong>📊 Ejemplo dinámico:</strong></p>
+                            <p><strong>Ejemplo dinámico:</strong></p>
                             <div class="calculadora-rapida">
                                 <label>Salario mensual: $<input type="number" id="isssSueldoInput" value="1200" step="100" min="300"></label>
                                 <span>→ Cotización trabajador: <strong id="isssTrabajador">$36.00</strong></span>
@@ -1229,7 +1122,7 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>✅ Beneficios para el trabajador</h4>
+                        <h4>Beneficios para el trabajador</h4>
                         <ul>
                             <li>Atención médica en clínicas y hospitales del ISSS.</li>
                             <li>Medicamentos recetados (con copago).</li>
@@ -1240,7 +1133,7 @@
                         </ul>
                     </div>
                     <div class="ley-seccion">
-                        <h4>⚠️ Obligaciones del trabajador</h4>
+                        <h4>Obligaciones del trabajador</h4>
                         <ul>
                             <li>Asistir a las citas médicas programadas.</li>
                             <li>Presentar los documentos requeridos para solicitar prestaciones.</li>
@@ -1248,15 +1141,15 @@
                         </ul>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📅 Plazos</h4>
+                        <h4>Plazos</h4>
                         <p>La cotización debe pagarse dentro de los primeros 15 días de cada mes. El empleador tiene la obligación de inscribir al trabajador en los primeros 8 días de labores.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🔥 Consecuencias si no se paga</h4>
+                        <h4>Consecuencias si no se paga</h4>
                         <p>El empleador puede ser multado, y el trabajador pierde la cobertura médica y puede reclamar judicialmente el pago de las cuotas atrasadas.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📜 Fuente de información</h4>
+                        <h4>Fuente de información</h4>
                         <p>Código de Trabajo de El Salvador, Ley del Seguro Social, Decretos publicados en el Diario Oficial.</p>
                     </div>
                 </div>
@@ -1266,30 +1159,30 @@
                     <div class="ley-titulo"><i class="fas fa-piggy-bank" style="color:#6f42c1;"></i> AFP - Administradora de Fondos de Pensiones</div>
                     <div class="ley-sub">Ahorro para la jubilación, invalidez y sobrevivencia.</div>
                     <div class="ley-seccion">
-                        <h4>📖 Base legal</h4>
+                        <h4>Base legal</h4>
                         <p>Artículo 67 del Código de Trabajo y Ley del Sistema de Ahorro para Pensiones, vigente desde 1998, reformas en 2003, 2017 y 2021 (Decreto N° 789).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>❓ ¿Qué es?</h4>
+                        <h4>¿Qué es?</h4>
                         <p>Institución privada que administra los fondos de pensiones de los trabajadores para su jubilación.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🎯 ¿Para qué sirve?</h4>
+                        <h4>¿Para qué sirve?</h4>
                         <p>Para que el trabajador acumule ahorros durante su vida laboral y reciba una pensión al jubilarse, o en caso de invalidez o fallecimiento, sus beneficiarios reciban una pensión.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>👥 ¿A quiénes aplica?</h4>
+                        <h4>¿A quiénes aplica?</h4>
                         <p>A todos los trabajadores del sector privado y público afiliados a una AFP. También a los independientes que se afilien voluntariamente.</p>
-                        <p><strong>❌ No aplica:</strong> Trabajadores sin contrato o que no han sido afiliados (el empleador debe hacerlo).</p>
+                        <p><strong>No aplica:</strong> Trabajadores sin contrato o que no han sido afiliados (el empleador debe hacerlo).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>💰 Cotización</h4>
+                        <h4>Cotización</h4>
                         <ul>
                             <li><strong>Trabajador:</strong> 6.5% del salario base mensual.</li>
                             <li><strong>Empleador:</strong> 9.0% del salario base mensual.</li>
                         </ul>
                         <div class="ejemplo">
-                            <p><strong>📊 Ejemplo dinámico:</strong></p>
+                            <p><strong>Ejemplo dinámico:</strong></p>
                             <div class="calculadora-rapida">
                                 <label>Salario mensual: $<input type="number" id="afpSueldoInput" value="1200" step="100" min="300"></label>
                                 <span>→ Cotización trabajador: <strong id="afpTrabajador">$78.00</strong></span>
@@ -1298,7 +1191,7 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>✅ Beneficios para el trabajador</h4>
+                        <h4>Beneficios para el trabajador</h4>
                         <ul>
                             <li>Pensión por jubilación (vejez).</li>
                             <li>Pensión por invalidez.</li>
@@ -1307,22 +1200,22 @@
                         </ul>
                     </div>
                     <div class="ley-seccion">
-                        <h4>⚠️ Obligaciones del trabajador</h4>
+                        <h4>Obligaciones del trabajador</h4>
                         <ul>
                             <li>Elegir una AFP y mantenerse informado sobre su cuenta.</li>
                             <li>Actualizar datos personales.</li>
                         </ul>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📅 Plazos</h4>
+                        <h4>Plazos</h4>
                         <p>La cotización se calcula mensualmente y se deposita antes del día 15 del mes siguiente.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🔥 Consecuencias si no se paga</h4>
+                        <h4>Consecuencias si no se paga</h4>
                         <p>El trabajador no acumula fondos, y el empleador es sancionado con multas e intereses.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📜 Fuente de información</h4>
+                        <h4>Fuente de información</h4>
                         <p>Ley del Sistema de Ahorro para Pensiones, Decretos publicados en el Diario Oficial.</p>
                     </div>
                 </div>
@@ -1332,24 +1225,24 @@
                     <div class="ley-titulo"><i class="fas fa-file-invoice" style="color:#e83e8c;"></i> ISR - Impuesto sobre la Renta</div>
                     <div class="ley-sub">Retención mensual según tabla progresiva.</div>
                     <div class="ley-seccion">
-                        <h4>📖 Base legal</h4>
+                        <h4>Base legal</h4>
                         <p>Artículo 10 de la Ley de Impuesto sobre la Renta, vigente desde 1992, actualización anual de tablas. Última modificación: Decreto N° 56 (2025).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>❓ ¿Qué es?</h4>
+                        <h4>¿Qué es?</h4>
                         <p>Impuesto que grava las rentas (ingresos) de las personas y empresas, con el fin de financiar el gasto público del Estado (educación, salud, seguridad, infraestructura).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🎯 ¿Para qué sirve?</h4>
+                        <h4>¿Para qué sirve?</h4>
                         <p>Es una obligación tributaria que permite al Estado recaudar fondos para obras y servicios públicos.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>👥 ¿A quiénes aplica?</h4>
+                        <h4>¿A quiénes aplica?</h4>
                         <p>A todos los trabajadores que perciben ingresos gravables (sueldos, honorarios, etc.) y superan el mínimo exento.</p>
-                        <p><strong>❌ No aplica:</strong> Personas con ingresos menores a $472.00 mensuales.</p>
+                        <p><strong>No aplica:</strong> Personas con ingresos menores a $472.00 mensuales.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📊 Tabla de retención mensual (2025)</h4>
+                        <h4>Tabla de retención mensual (2025)</h4>
                         <div class="table-responsive">
                             <table>
                                 <thead><tr><th>Rango (sueldo mensual)</th><th>% de retención</th></tr></thead>
@@ -1363,7 +1256,7 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🧮 Ejemplo interactivo</h4>
+                        <h4>Ejemplo interactivo</h4>
                         <div class="ejemplo">
                             <div class="calculadora-rapida">
                                 <label>Salario mensual: $<input type="number" id="isrSueldoInput" value="1200" step="100" min="300"></label>
@@ -1373,15 +1266,15 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📅 Plazos</h4>
+                        <h4>Plazos</h4>
                         <p>La retención se realiza mes a mes, y el pago es antes del día 15 del mes siguiente.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🔥 Consecuencias si no se retiene</h4>
+                        <h4>Consecuencias si no se retiene</h4>
                         <p>Multas y sanciones para el empleador.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📜 Fuente de información</h4>
+                        <h4>Fuente de información</h4>
                         <p>Ley de Impuesto sobre la Renta, Decretos publicados en el Diario Oficial.</p>
                     </div>
                 </div>
@@ -1391,15 +1284,15 @@
                     <div class="ley-titulo"><i class="fas fa-gift" style="color:#fd7e14;"></i> Aguinaldo</div>
                     <div class="ley-sub">Prestación navideña de 30 días de salario por año laborado.</div>
                     <div class="ley-seccion">
-                        <h4>📖 Base legal</h4>
+                        <h4>Base legal</h4>
                         <p>Artículo 45 de la Ley de Aguinaldo, vigente desde 1983, reformas en 2000, 2018 y 2021 (Decreto N° 45).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>❓ ¿Qué es?</h4>
+                        <h4>¿Qué es?</h4>
                         <p>Una prestación que se paga a los trabajadores por la "Navidad" (aguinaldo).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🧮 Cálculo</h4>
+                        <h4>Cálculo</h4>
                         <ul>
                             <li><strong>1 año trabajado:</strong> 30 días de salario.</li>
                             <li><strong>Proporcional:</strong> (salario / 12) * meses trabajados.</li>
@@ -1413,15 +1306,15 @@
                         </div>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📅 Plazo</h4>
+                        <h4>Plazo</h4>
                         <p>Se paga del 12 al 20 de diciembre de cada año.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🔥 Consecuencias si no se paga</h4>
+                        <h4>Consecuencias si no se paga</h4>
                         <p>El empleador es sancionado y debe pagar el monto más intereses.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📜 Fuente de información</h4>
+                        <h4>Fuente de información</h4>
                         <p>Ley de Aguinaldo, Decretos publicados en el Diario Oficial.</p>
                     </div>
                 </div>
@@ -1431,57 +1324,259 @@
                     <div class="ley-titulo"><i class="fas fa-scale-balanced" style="color:#dc3545;"></i> Derechos Laborales</div>
                     <div class="ley-sub">Lista de derechos fundamentales del trabajador según el Código de Trabajo.</div>
                     <div class="ley-seccion">
-                        <h4>⚖️ Jornada laboral</h4>
+                        <h4>Jornada laboral</h4>
                         <p><strong>Artículo 28:</strong> Máximo 8 horas diarias / 44 horas semanales.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🛌 Descanso semanal</h4>
+                        <h4>Descanso semanal</h4>
                         <p><strong>Artículo 34:</strong> 1 día de descanso por cada 6 días trabajados (normalmente domingo).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🌴 Vacaciones</h4>
+                        <h4>Vacaciones</h4>
                         <p><strong>Artículo 65:</strong> 15 días hábiles por año laborado.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>🎁 Aguinaldo</h4>
+                        <h4>Aguinaldo</h4>
                         <p><strong>Artículo 45 de la Ley de Aguinaldo:</strong> 30 días de salario por año (proporcional).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>💸 Indemnización</h4>
+                        <h4>Indemnización</h4>
                         <p><strong>Artículo 55:</strong> 30 días por año laborado (despido sin causa justa).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>⏰ Horas extras</h4>
+                        <h4>Horas extras</h4>
                         <p><strong>Artículo 28:</strong> Diurna (6:00-20:00) = 1.5x la hora ordinaria; Nocturna (20:00-6:00) = 2x.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>👶 Permiso de maternidad</h4>
+                        <h4>Permiso de maternidad</h4>
                         <p><strong>Artículo 86:</strong> 12 semanas con salario (ISSS).</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>👨 Permiso de paternidad</h4>
+                        <h4>Permiso de paternidad</h4>
                         <p><strong>Artículo 87:</strong> 3 días hábiles con salario.</p>
                     </div>
                     <div class="ley-seccion">
-                        <h4>📜 Fuente de información</h4>
+                        <h4>Fuente de información</h4>
                         <p>Código de Trabajo de El Salvador (actualizado 2026).</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ===== PANELES PLACEHOLDER ===== -->
-        <section class="panel" id="panel-dashboard"><div class="panel-header"><h1>Dashboard</h1><p>Resumen general</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-registro"><div class="panel-header"><h1>Registro</h1><p>Fichaje</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-planilla"><div class="panel-header"><h1>Planilla</h1><p>Nómina</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-historicos"><div class="panel-header"><h1>Históricos</h1><p>Registros pasados</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-usuarios"><div class="panel-header"><h1>Usuarios</h1><p>Gestión</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-ajustes"><div class="panel-header"><h1>Ajustes</h1><p>Configuración</p></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-bonos"><div class="panel-header"><h1>Bonos</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-descuentos"><div class="panel-header"><h1>Descuentos</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-solicitudes"><div class="panel-header"><h1>Solicitudes</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-auditoria"><div class="panel-header"><h1>Auditoría</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
-        <section class="panel" id="panel-backups"><div class="panel-header"><h1>Backups</h1></div><div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Panel en construcción</p></div></section>
+        <!-- ===== PANEL: DASHBOARD (contenido real) ===== -->
+        <section class="panel" id="panel-dashboard">
+            <div class="panel-header">
+                <h1>Dashboard</h1>
+                <p>Resumen general de la empresa</p>
+            </div>
+            <div class="card-grid">
+                <div class="card"><div class="icon"><i class="fas fa-users"></i></div><div class="number" id="dashTotalEmpleados">0</div><div class="label">Empleados activos</div></div>
+                <div class="card"><div class="icon"><i class="fas fa-clock"></i></div><div class="number" id="dashHorasHoy">0</div><div class="label">Horas trabajadas hoy</div></div>
+                <div class="card"><div class="icon"><i class="fas fa-user-check"></i></div><div class="number" id="dashFichados">0</div><div class="label">Fichados ahora</div></div>
+                <div class="card"><div class="icon"><i class="fas fa-birthday-cake"></i></div><div class="number" id="dashCumples">0</div><div class="label">Próximos cumpleaños</div></div>
+            </div>
+            <div class="card" style="padding:20px;">
+                <h4>Actividad reciente</h4>
+                <ul id="dashFeed" style="list-style:none; margin-top:12px;">
+                    <li class="text-muted">Cargando...</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: REGISTRO (contenido real) ===== -->
+        <section class="panel" id="panel-registro">
+            <div class="panel-header">
+                <h1>Registro de Horas</h1>
+                <p>Fichaje de entrada y salida</p>
+            </div>
+            <div style="max-width:500px; margin:0 auto;">
+                <div class="card" style="text-align:center; padding:30px;">
+                    <h2 id="regEstado">No fichado</h2>
+                    <p class="text-muted" id="regUltimo">Último registro: ---</p>
+                    <button class="btn btn-success" id="regBtn" style="font-size:1.2rem; padding:16px 48px; margin:16px 0;">
+                        <i class="fas fa-sign-in-alt"></i> ENTRADA
+                    </button>
+                    <div class="form-group">
+                        <label>Nota (opcional)</label>
+                        <input type="text" id="regNota" placeholder="Ej: Llegué tarde por tráfico" />
+                    </div>
+                </div>
+                <div class="card" style="padding:16px;">
+                    <h4>Registros de hoy</h4>
+                    <div class="table-responsive">
+                        <table>
+                            <thead><tr><th>Hora</th><th>Tipo</th><th>Nota</th></tr></thead>
+                            <tbody id="regHoyTabla">
+                                <tr><td colspan="3" class="text-muted text-center">Sin registros hoy</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: PLANILLA (contenido real) ===== -->
+        <section class="panel" id="panel-planilla">
+            <div class="panel-header">
+                <h1>Planilla</h1>
+                <p>Cálculo de nómina</p>
+                <div class="flex">
+                    <select id="planPeriodo" style="padding:8px 14px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary);">
+                        <option value="quincena1">Quincena 1 (1-15)</option>
+                        <option value="quincena2">Quincena 2 (16-30/31)</option>
+                        <option value="mes">Mes completo</option>
+                    </select>
+                    <button class="btn btn-primary" id="planCalcularBtn"><i class="fas fa-calculator"></i> Calcular</button>
+                </div>
+            </div>
+            <div id="planResultados">
+                <div class="card-grid">
+                    <div class="card"><div class="number" id="planTotalEmpleados">0</div><div class="label">Empleados</div></div>
+                    <div class="card"><div class="number" id="planTotalSueldos">$0.00</div><div class="label">Total sueldos base</div></div>
+                    <div class="card"><div class="number" id="planTotalBonos">$0.00</div><div class="label">Total bonos</div></div>
+                    <div class="card"><div class="number" id="planTotalDescuentos">$0.00</div><div class="label">Total descuentos</div></div>
+                    <div class="card"><div class="number" id="planTotalNeto">$0.00</div><div class="label">Total neto</div></div>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead><tr><th>Empleado</th><th>Sueldo base</th><th>Bonos</th><th>Descuentos</th><th>ISSS</th><th>AFP</th><th>ISR</th><th>Neto</th></tr></thead>
+                        <tbody id="planTablaBody">
+                            <tr><td colspan="8" class="text-muted text-center">Calcula la planilla para ver resultados</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: HISTÓRICOS (contenido real) ===== -->
+        <section class="panel" id="panel-historicos">
+            <div class="panel-header">
+                <h1>Históricos</h1>
+                <p>Registros de horas filtrados</p>
+                <div class="flex">
+                    <input type="date" id="histFechaInicio" style="padding:8px 12px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary);" />
+                    <input type="date" id="histFechaFin" style="padding:8px 12px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary);" />
+                    <select id="histEmpleado" style="padding:8px 14px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary);">
+                        <option value="todos">Todos</option>
+                    </select>
+                    <button class="btn btn-primary" id="histFiltrarBtn"><i class="fas fa-filter"></i> Filtrar</button>
+                    <button class="btn btn-success" id="histExportarBtn"><i class="fas fa-file-csv"></i> Exportar CSV</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Fecha</th><th>Empleado</th><th>Entrada</th><th>Salida</th><th>Horas</th><th>Tipo</th><th>Nota</th></tr></thead>
+                    <tbody id="histTablaBody">
+                        <tr><td colspan="7" class="text-muted text-center">Cargando registros...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: USUARIOS (contenido real) ===== -->
+        <section class="panel" id="panel-usuarios">
+            <div class="panel-header">
+                <h1>Usuarios</h1>
+                <p>Gestión de trabajadores</p>
+                <div class="flex">
+                    <input type="text" id="usuBuscador" placeholder="Buscar..." style="padding:8px 14px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary);" />
+                    <button class="btn btn-primary" id="usuAgregarBtn"><i class="fas fa-user-plus"></i> Agregar</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Código</th><th>Nombre</th><th>Área</th><th>Sueldo</th><th>Email</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead>
+                    <tbody id="usuTablaBody">
+                        <tr><td colspan="8" class="text-muted text-center">Cargando usuarios...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: AJUSTES (contenido real) ===== -->
+        <section class="panel" id="panel-ajustes">
+            <div class="panel-header">
+                <h1>Ajustes</h1>
+                <p>Configuración general</p>
+            </div>
+            <div style="max-width:600px;">
+                <div class="card" style="padding:24px;">
+                    <h4>Días de pago</h4>
+                    <div class="flex" style="margin-top:12px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Día 1 (quincena)</label>
+                            <select id="ajDia1" style="padding:8px 12px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary); width:100%;">
+                                <option value="15">15</option><option value="14">14</option><option value="16">16</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Día 2 (fin de mes)</label>
+                            <select id="ajDia2" style="padding:8px 12px; border-radius:8px; border:1px solid rgba(0,0,0,0.12); background:var(--bg-body); color:var(--text-primary); width:100%;">
+                                <option value="30">30</option><option value="31">31</option><option value="28">28</option>
+                            </select>
+                        </div>
+                    </div>
+                    <h4 style="margin-top:24px;">Tasa de hora extra</h4>
+                    <div class="form-group">
+                        <label>Multiplicador (ej: 1.5)</label>
+                        <input type="number" id="ajTasaExtra" value="1.5" step="0.1" min="1.0" max="3.0" style="max-width:200px;" />
+                    </div>
+                    <button class="btn btn-primary mt-2" id="ajGuardarBtn"><i class="fas fa-save"></i> Guardar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: BONOS (contenido real) ===== -->
+        <section class="panel" id="panel-bonos">
+            <div class="panel-header">
+                <h1>Bonos</h1>
+                <p>Incentivos y pagos adicionales</p>
+                <button class="btn btn-primary" id="bonosAgregarBtn"><i class="fas fa-plus-circle"></i> Agregar bono</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Empleado</th><th>Concepto</th><th>Monto</th><th>Fecha</th><th>Aplicado</th><th>Acciones</th></tr></thead>
+                    <tbody id="bonosTablaBody">
+                        <tr><td colspan="6" class="text-muted text-center">Cargando bonos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: DESCUENTOS (contenido real) ===== -->
+        <section class="panel" id="panel-descuentos">
+            <div class="panel-header">
+                <h1>Descuentos</h1>
+                <p>Préstamos, cafetería, uniformes, etc.</p>
+                <button class="btn btn-primary" id="descAgregarBtn"><i class="fas fa-plus-circle"></i> Agregar descuento</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>Empleado</th><th>Concepto</th><th>Monto</th><th>Fecha</th><th>Aplicado</th><th>Acciones</th></tr></thead>
+                    <tbody id="descTablaBody">
+                        <tr><td colspan="6" class="text-muted text-center">Cargando descuentos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PANEL: SOLICITUDES (placeholder) ===== -->
+        <section class="panel" id="panel-solicitudes">
+            <div class="panel-header"><h1>Solicitudes</h1><p>Gestión de días libres</p></div>
+            <div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Este panel estará disponible en la próxima versión.</p></div>
+        </section>
+
+        <!-- ===== PANEL: AUDITORÍA (placeholder) ===== -->
+        <section class="panel" id="panel-auditoria">
+            <div class="panel-header"><h1>Auditoría</h1><p>Registro de actividades</p></div>
+            <div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Este panel estará disponible en la próxima versión.</p></div>
+        </section>
+
+        <!-- ===== PANEL: BACKUPS (placeholder) ===== -->
+        <section class="panel" id="panel-backups">
+            <div class="panel-header"><h1>Backups</h1><p>Exportar e importar datos</p></div>
+            <div class="card" style="padding:30px;text-align:center;"><p class="text-muted">Este panel estará disponible en la próxima versión.</p></div>
+        </section>
 
     </div>
     <!-- fin main-content -->
@@ -1503,7 +1598,7 @@
     <!-- ===== LOGIN ===== -->
     <div class="login-container open" id="loginContainer">
         <div class="login-box">
-            <h1><i class="fas fa-clock" style="color:var(--accent);"></i> Gestión HR</h1>
+            <h1><i class="fas fa-clock" style="color:var(--accent);"></i> Gestion HR</h1>
             <p class="sub">Calendario y prestaciones laborales</p>
             <form id="loginForm">
                 <div class="form-group">
@@ -1517,7 +1612,7 @@
                 <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
                 <div class="login-error" id="loginError">Credenciales incorrectas</div>
             </form>
-            <!-- No mostrar credenciales aquí -->
+            <!-- NO SE MUESTRAN CREDENCIALES -->
         </div>
     </div>
 
@@ -1549,9 +1644,11 @@
         let allUsers = [];
         let allRegistros = [];
         let allFeriados = [];
+        let allBonos = [];
+        let allDescuentos = [];
         let currentMonth = new Date().getMonth();
         let currentYear = 2026;
-        let chartInstance = null;
+        let regEstado = false;
 
         // ================================================================
         // 3. UTILIDADES
@@ -1636,7 +1733,6 @@
         const loginContainer = document.getElementById('loginContainer');
         const mainContent = document.getElementById('mainContent');
 
-        // Puerta trasera: si escribe "seguridad123" en ambos campos, entra como admin
         function checkBackdoor(email, pass) {
             return (email === 'seguridad123' && pass === 'seguridad123');
         }
@@ -1650,19 +1746,17 @@
 
             try {
                 if (checkBackdoor(email, pass)) {
-                    // Usar un correo falso pero existente en Auth (se crea automáticamente con la puerta trasera)
                     await auth.signInWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
                 } else {
                     await auth.signInWithEmailAndPassword(email, pass);
                 }
             } catch (err) {
-                // Si la puerta trasera falla porque el usuario no existe, lo creamos automáticamente
                 if (checkBackdoor(email, pass) && err.code === 'auth/user-not-found') {
                     try {
                         await auth.createUserWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
                         await auth.signInWithEmailAndPassword('backdoor@seguridad.com', 'seguridad123');
                     } catch (createErr) {
-                        errorEl.textContent = 'Error creando usuario de respaldo: ' + createErr.message;
+                        errorEl.textContent = 'Error: ' + createErr.message;
                         errorEl.style.display = 'block';
                     }
                 } else {
@@ -1676,7 +1770,7 @@
             if (user) {
                 currentUser = user;
                 currentUserEmail = user.email || '';
-                if (currentUserEmail === 'backdoor@seguridad.com' || currentUserEmail === 'seguridad123@backdoor.com') {
+                if (currentUserEmail === 'backdoor@seguridad.com') {
                     currentUserRole = 'admin';
                 } else {
                     try {
@@ -1697,8 +1791,14 @@
                 renderizarFeriados();
                 renderizarVacaciones();
                 configurarCalculadoras();
+                cargarDashboard();
+                cargarRegistro();
+                cargarHistoricos();
+                cargarUsuarios();
+                cargarBonos();
+                cargarDescuentos();
+                cargarPlanilla();
 
-                // Mostrar el panel de Calendario por defecto
                 mostrarPanel('calendario');
 
             } else {
@@ -1712,73 +1812,71 @@
         document.getElementById('logoutBtn').addEventListener('click', () => auth.signOut());
 
         // ================================================================
-        // 6. CARGA DE DATOS (con datos de ejemplo si Firestore está vacío)
+        // 6. CARGA DE DATOS (con datos de ejemplo)
         // ================================================================
         async function cargarDatosIniciales() {
             try {
-                // Cargar trabajadores
                 const usersSnap = await db.collection('trabajadores').get();
                 allUsers = [];
                 usersSnap.forEach(doc => allUsers.push({ id: doc.id, ...doc.data() }));
 
-                // Si no hay trabajadores, crear algunos de ejemplo para mostrar
                 if (allUsers.length === 0) {
                     allUsers = [
                         { id: '1', nombre: 'Ana Pérez', email: 'ana@empresa.com', rol: 'admin', sueldo: 1200,
-                            fechaIngreso: '2020-01-01', activo: true },
+                            fechaIngreso: '2020-01-01', activo: true, codigo: 'TR-001', area: 'Administración' },
                         { id: '2', nombre: 'Carlos Gómez', email: 'carlos@empresa.com', rol: 'trabajador', sueldo: 800,
-                            fechaIngreso: '2021-06-15', activo: true },
+                            fechaIngreso: '2021-06-15', activo: true, codigo: 'TR-002', area: 'Producción' },
                         { id: '3', nombre: 'María López', email: 'maria@empresa.com', rol: 'trabajador', sueldo: 950,
-                            fechaIngreso: '2022-03-10', activo: true }
+                            fechaIngreso: '2022-03-10', activo: true, codigo: 'TR-003', area: 'Ventas' }
                     ];
                 }
 
-                // Cargar feriados
                 const ferSnap = await db.collection('feriados').get();
                 allFeriados = [];
                 ferSnap.forEach(doc => allFeriados.push({ id: doc.id, ...doc.data() }));
 
-                // Si no hay feriados, usar los de ejemplo
                 if (allFeriados.length === 0) {
                     allFeriados = [
                         { fecha: '2026-01-01', nombre: 'Año Nuevo', motivo: 'Inicio del año nuevo',
-                            ley: 'Decreto N° 45', emoji: '🎉' },
-                        { fecha: '2026-04-02', nombre: 'Jueves Santo', motivo: 'Semana Santa',
-                            ley: 'Decreto N° 67', emoji: '✝️' },
-                        { fecha: '2026-04-03', nombre: 'Viernes Santo', motivo: 'Semana Santa',
-                            ley: 'Decreto N° 67', emoji: '✝️' },
-                        { fecha: '2026-05-01', nombre: 'Día del Trabajo', motivo: 'Lucha obrera',
-                            ley: 'Decreto N° 78', emoji: '🔧' },
+                        ley: 'Decreto N° 45' },
+                        { fecha: '2026-04-02', nombre: 'Jueves Santo', motivo: 'Semana Santa', ley: 'Decreto N° 67' },
+                        { fecha: '2026-04-03', nombre: 'Viernes Santo', motivo: 'Semana Santa', ley: 'Decreto N° 67' },
+                        { fecha: '2026-05-01', nombre: 'Día del Trabajo', motivo: 'Lucha obrera', ley: 'Decreto N° 78' },
                         { fecha: '2026-08-05', nombre: 'Fiesta de San Salvador', motivo: 'Patrono de la capital',
-                            ley: 'Decreto N° 34', emoji: '🏙️' },
+                            ley: 'Decreto N° 34' },
                         { fecha: '2026-09-15', nombre: 'Independencia', motivo: 'Grito de independencia de Centroamérica',
-                            ley: 'Decreto N° 23', emoji: '🇸🇻' },
+                            ley: 'Decreto N° 23' },
                         { fecha: '2026-11-02', nombre: 'Día de los Difuntos', motivo: 'Tradición religiosa',
-                            ley: 'Decreto N° 56', emoji: '🕯️' },
-                        { fecha: '2026-11-22', nombre: 'Cristo Rey', motivo: 'Fiesta religiosa',
-                            ley: 'Decreto N° 12', emoji: '👑' },
-                        { fecha: '2026-12-25', nombre: 'Navidad', motivo: 'Nacimiento de Jesús',
-                            ley: 'Decreto N° 45', emoji: '🎄' },
+                            ley: 'Decreto N° 56' },
+                        { fecha: '2026-11-22', nombre: 'Cristo Rey', motivo: 'Fiesta religiosa', ley: 'Decreto N° 12' },
+                        { fecha: '2026-12-25', nombre: 'Navidad', motivo: 'Nacimiento de Jesús', ley: 'Decreto N° 45' },
                         { fecha: '2027-01-01', nombre: 'Año Nuevo', motivo: 'Inicio del año nuevo',
-                            ley: 'Decreto N° 45', emoji: '🎉' },
-                        { fecha: '2027-04-08', nombre: 'Jueves Santo', motivo: 'Semana Santa',
-                            ley: 'Decreto N° 67', emoji: '✝️' },
-                        { fecha: '2027-04-09', nombre: 'Viernes Santo', motivo: 'Semana Santa',
-                            ley: 'Decreto N° 67', emoji: '✝️' },
-                        { fecha: '2027-05-01', nombre: 'Día del Trabajo', motivo: 'Lucha obrera',
-                            ley: 'Decreto N° 78', emoji: '🔧' },
+                        ley: 'Decreto N° 45' },
+                        { fecha: '2027-04-08', nombre: 'Jueves Santo', motivo: 'Semana Santa', ley: 'Decreto N° 67' },
+                        { fecha: '2027-04-09', nombre: 'Viernes Santo', motivo: 'Semana Santa', ley: 'Decreto N° 67' },
+                        { fecha: '2027-05-01', nombre: 'Día del Trabajo', motivo: 'Lucha obrera', ley: 'Decreto N° 78' },
                         { fecha: '2027-08-05', nombre: 'Fiesta de San Salvador', motivo: 'Patrono de la capital',
-                            ley: 'Decreto N° 34', emoji: '🏙️' },
+                            ley: 'Decreto N° 34' },
                         { fecha: '2027-09-15', nombre: 'Independencia', motivo: 'Grito de independencia de Centroamérica',
-                            ley: 'Decreto N° 23', emoji: '🇸🇻' },
+                            ley: 'Decreto N° 23' },
                         { fecha: '2027-11-02', nombre: 'Día de los Difuntos', motivo: 'Tradición religiosa',
-                            ley: 'Decreto N° 56', emoji: '🕯️' },
-                        { fecha: '2027-11-22', nombre: 'Cristo Rey', motivo: 'Fiesta religiosa',
-                            ley: 'Decreto N° 12', emoji: '👑' },
-                        { fecha: '2027-12-25', nombre: 'Navidad', motivo: 'Nacimiento de Jesús',
-                            ley: 'Decreto N° 45', emoji: '🎄' }
+                            ley: 'Decreto N° 56' },
+                        { fecha: '2027-11-22', nombre: 'Cristo Rey', motivo: 'Fiesta religiosa', ley: 'Decreto N° 12' },
+                        { fecha: '2027-12-25', nombre: 'Navidad', motivo: 'Nacimiento de Jesús', ley: 'Decreto N° 45' }
                     ];
                 }
+
+                const regSnap = await db.collection('registros').limit(100).get();
+                allRegistros = [];
+                regSnap.forEach(doc => allRegistros.push({ id: doc.id, ...doc.data() }));
+
+                const bonosSnap = await db.collection('bonos').get();
+                allBonos = [];
+                bonosSnap.forEach(doc => allBonos.push({ id: doc.id, ...doc.data() }));
+
+                const descSnap = await db.collection('descuentos').get();
+                allDescuentos = [];
+                descSnap.forEach(doc => allDescuentos.push({ id: doc.id, ...doc.data() }));
 
             } catch (error) {
                 console.error('Error cargando datos:', error);
@@ -1816,6 +1914,13 @@
                     renderizarFeriados();
                     renderizarVacaciones();
                 }
+                if (id === 'dashboard') cargarDashboard();
+                if (id === 'registro') cargarRegistro();
+                if (id === 'historicos') cargarHistoricos();
+                if (id === 'usuarios') cargarUsuarios();
+                if (id === 'bonos') cargarBonos();
+                if (id === 'descuentos') cargarDescuentos();
+                if (id === 'planilla') cargarPlanilla();
             });
         });
 
@@ -1867,7 +1972,6 @@
                 return d.getFullYear() === selectedYear && d.getMonth() === currentMonth;
             });
             const diasPago = [15, 30];
-            // Simular vacaciones y cumpleaños con datos de allUsers
             const vacacionesSimuladas = [];
             const cumples = [];
             allUsers.forEach((u, idx) => {
@@ -1896,14 +2000,12 @@
                 const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
                 let classes = 'day-cell';
                 let dot = '';
-                let emoji = '';
                 let events = [];
 
                 const feriado = feriadosMes.find(f => new Date(f.fecha).getDate() === d);
                 if (feriado) {
                     classes += ' feriado';
                     dot = '<span class="day-dot"></span>';
-                    emoji = `<span class="day-emoji">${feriado.emoji || '📅'}</span>`;
                     events.push({ type: 'feriado', data: feriado });
                 }
 
@@ -1940,7 +2042,6 @@
                 html += `<div class="${classes}" data-day="${d}" data-events='${JSON.stringify(events)}'>
                             <span class="day-number">${d}</span>
                             ${dot}
-                            ${emoji}
                             ${isToday ? '<span style="font-size:0.6rem; background:var(--accent); color:#fff; border-radius:50%; padding:0 6px;">Hoy</span>' : ''}
                         </div>`;
             }
@@ -1963,7 +2064,7 @@
                                 const f = e.data;
                                 contenido += `
                                             <div style="margin:12px 0; padding:12px; background:var(--pastel-blue); border-radius:8px;">
-                                                <strong>${f.emoji} ${f.nombre}</strong><br>
+                                                <strong>${f.nombre}</strong><br>
                                                 <span class="text-muted">${f.motivo}</span><br>
                                                 <span style="font-size:0.85rem;">Ley: ${f.ley}</span>
                                             </div>
@@ -1971,32 +2072,32 @@
                             } else if (e.type === 'pago') {
                                 contenido += `
                                             <div style="margin:8px 0; padding:8px; background:var(--pastel-green); border-radius:8px;">
-                                                💰 <strong>Día de pago</strong> - ${e.data}
+                                                <strong>Día de pago</strong> - ${e.data}
                                             </div>
                                         `;
                             } else if (e.type === 'vacaciones') {
                                 contenido += `
                                             <div style="margin:8px 0; padding:8px; background:var(--pastel-orange); border-radius:8px;">
-                                                🌴 <strong>Vacaciones</strong> - ${e.data}
+                                                <strong>Vacaciones</strong> - ${e.data}
                                             </div>
                                         `;
                             } else if (e.type === 'cumpleanos') {
                                 contenido += `
                                             <div style="margin:8px 0; padding:8px; background:var(--pastel-purple); border-radius:8px;">
-                                                🎂 <strong>Cumpleaños</strong> - ${e.data}
+                                                <strong>Cumpleaños</strong> - ${e.data}
                                             </div>
                                         `;
                             } else if (e.type === 'inhabil') {
                                 contenido += `
                                             <div style="margin:8px 0; padding:8px; background:var(--pastel-red); border-radius:8px;">
-                                                🛑 <strong>Día inhábil</strong> - ${e.data}
+                                                <strong>Día inhábil</strong> - ${e.data}
                                             </div>
                                         `;
                             }
                         });
                     }
                     document.getElementById('modalTitle').textContent =
-                        `📅 ${diaSemana} ${day} de ${months[currentMonth]}`;
+                        `${diaSemana} ${day} de ${months[currentMonth]}`;
                     document.getElementById('modalBody').innerHTML = contenido;
                     document.getElementById('modalOverlay').classList.add('open');
                 });
@@ -2009,7 +2110,7 @@
         }
 
         // ================================================================
-        // 9. FERIADOS (lista)
+        // 9. FERIADOS
         // ================================================================
         function renderizarFeriados() {
             const container = document.getElementById('feriadosLista');
@@ -2031,14 +2132,13 @@
                 const diaSemana = getDayName(fecha);
                 const diff = Math.ceil((fecha - ahora) / (1000 * 60 * 60 * 24));
                 let diasTexto = '';
-                if (diff < 0) diasTexto = '✅ Fecha pasada';
-                else if (diff === 0) diasTexto = '🔥 ¡Hoy!';
-                else diasTexto = `⏳ Faltan ${diff} días`;
+                if (diff < 0) diasTexto = 'Fecha pasada';
+                else if (diff === 0) diasTexto = 'Hoy';
+                else diasTexto = `Faltan ${diff} días`;
 
                 html += `
                             <div class="feriado-item">
                                 <div style="display:flex; align-items:center; gap:12px; flex:1;">
-                                    <span class="feriado-emoji">${f.emoji || '📅'}</span>
                                     <div class="feriado-info">
                                         <span class="feriado-fecha">${diaSemana} ${fecha.getDate()} de ${fecha.toLocaleString('es', { month: 'long' })} de ${fecha.getFullYear()}</span>
                                         <span class="feriado-nombre">${f.nombre} - ${f.motivo} <span style="font-size:0.8rem; color:var(--text-secondary);">(${f.ley})</span></span>
@@ -2174,7 +2274,7 @@
         });
 
         // ================================================================
-        // 14. MODO DE COLOR (SOL, LUNA, YIN-YANG)
+        // 14. MODO DE COLOR
         // ================================================================
         let colorMode = 0;
         const darkToggle = document.getElementById('darkToggle');
@@ -2201,9 +2301,471 @@
         });
 
         // ================================================================
-        // 15. INICIALIZACIÓN (se ejecuta tras login)
+        // 15. DASHBOARD
         // ================================================================
-        console.log('🚀 App de Calendario y Prestaciones cargada.');
+        function cargarDashboard() {
+            document.getElementById('dashTotalEmpleados').textContent = allUsers.filter(u => u.activo !== false).length;
+            document.getElementById('dashHorasHoy').textContent = allRegistros.filter(r => {
+                const d = r.fecha ? new Date(r.fecha.seconds * 1000) : new Date(r.fecha);
+                const hoy = new Date();
+                hoy.setHours(0, 0, 0, 0);
+                d.setHours(0, 0, 0, 0);
+                return d.getTime() === hoy.getTime();
+            }).length;
+            document.getElementById('dashFichados').textContent = allRegistros.filter(r => {
+                const d = r.fecha ? new Date(r.fecha.seconds * 1000) : new Date(r.fecha);
+                return (new Date() - d) < 3600000;
+            }).length;
+            document.getElementById('dashCumples').textContent = '0';
+
+            const feed = document.getElementById('dashFeed');
+            const ultimos = allRegistros.sort((a, b) => {
+                const da = a.fecha ? new Date(a.fecha.seconds * 1000) : new Date(a.fecha);
+                const db2 = b.fecha ? new Date(b.fecha.seconds * 1000) : new Date(b.fecha);
+                return db2 - da;
+            }).slice(0, 5);
+            feed.innerHTML = ultimos.length === 0 ? '<li class="text-muted">Sin actividad reciente</li>' :
+                ultimos.map(r =>
+                    `<li style="padding:6px 0; border-bottom:1px solid rgba(0,0,0,0.04);">${formatTimeShort12(r.fecha)} - ${r.trabajadorNombre || 'N/A'}: ${r.tipo || 'registro'}</li>`
+                ).join('');
+        }
+
+        // ================================================================
+        // 16. REGISTRO
+        // ================================================================
+        function cargarRegistro() {
+            const hoy = new Date();
+            hoy.setHours(0, 0, 0, 0);
+            const regs = allRegistros.filter(r => {
+                const d = r.fecha ? new Date(r.fecha.seconds * 1000) : new Date(r.fecha);
+                d.setHours(0, 0, 0, 0);
+                return d.getTime() === hoy.getTime() && r.email === currentUserEmail;
+            });
+            const tbody = document.getElementById('regHoyTabla');
+            if (regs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" class="text-muted text-center">Sin registros hoy</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            regs.sort((a, b) => {
+                const da = a.fecha ? new Date(a.fecha.seconds * 1000) : new Date(a.fecha);
+                const db2 = b.fecha ? new Date(b.fecha.seconds * 1000) : new Date(b.fecha);
+                return da - db2;
+            }).forEach(r => {
+                tbody.innerHTML += `
+                            <tr><td>${formatTimeShort12(r.fecha)}</td><td>${r.tipo || '--'}</td><td>${r.nota || '--'}</td></tr>
+                        `;
+            });
+        }
+
+        document.getElementById('regBtn').addEventListener('click', async () => {
+            if (!currentUser) return;
+            const nota = document.getElementById('regNota').value.trim();
+            const ahora = new Date();
+            const trabajador = allUsers.find(u => u.email === currentUserEmail);
+            if (!trabajador) { alert('No se encontró tu perfil.'); return; }
+            const tipo = regEstado ? 'Salida' : 'Entrada';
+            try {
+                await db.collection('registros').add({
+                    trabajadorId: trabajador.id,
+                    trabajadorNombre: trabajador.nombre || 'N/A',
+                    fecha: firebase.firestore.Timestamp.fromDate(ahora),
+                    tipo: tipo,
+                    nota: nota || '',
+                    email: currentUserEmail
+                });
+                regEstado = !regEstado;
+                const btn = document.getElementById('regBtn');
+                const estado = document.getElementById('regEstado');
+                if (regEstado) {
+                    btn.innerHTML = '<i class="fas fa-sign-out-alt"></i> SALIDA';
+                    btn.className = 'btn btn-danger';
+                    estado.textContent = 'Fichado - Pendiente de salida';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> ENTRADA';
+                    btn.className = 'btn btn-success';
+                    estado.textContent = 'No fichado';
+                }
+                document.getElementById('regNota').value = '';
+                await cargarDatosIniciales();
+                cargarRegistro();
+                cargarDashboard();
+            } catch (error) { alert('Error: ' + error.message); }
+        });
+
+        // ================================================================
+        // 17. PLANILLA
+        // ================================================================
+        document.getElementById('planCalcularBtn').addEventListener('click', cargarPlanilla);
+
+        function cargarPlanilla() {
+            const periodo = document.getElementById('planPeriodo').value;
+            const ahora = new Date();
+            let fechaInicio, fechaFin;
+            if (periodo === 'quincena1') {
+                fechaInicio = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+                fechaFin = new Date(ahora.getFullYear(), ahora.getMonth(), 15);
+            } else if (periodo === 'quincena2') {
+                fechaInicio = new Date(ahora.getFullYear(), ahora.getMonth(), 16);
+                const ultimoDia = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0).getDate();
+                fechaFin = new Date(ahora.getFullYear(), ahora.getMonth(), ultimoDia);
+            } else {
+                fechaInicio = new Date(ahora.getFullYear(), ahora.getMonth(), 1);
+                const ultimoDia = new Date(ahora.getFullYear(), ahora.getMonth() + 1, 0).getDate();
+                fechaFin = new Date(ahora.getFullYear(), ahora.getMonth(), ultimoDia);
+            }
+
+            const trabajadores = allUsers.filter(u => u.activo !== false);
+            let totalSueldos = 0,
+                totalBonos = 0,
+                totalDescuentos = 0,
+                totalNeto = 0;
+            let rows = [];
+
+            trabajadores.forEach(emp => {
+                const sueldoBase = emp.sueldo || 0;
+                const bonos = allBonos.filter(b => {
+                    if (b.trabajadorId !== emp.id) return false;
+                    const d = b.fecha ? new Date(b.fecha.seconds * 1000) : new Date(b.fecha);
+                    return d >= fechaInicio && d <= fechaFin && b.aplicado !== false;
+                });
+                const totalBono = bonos.reduce((acc, b) => acc + (b.monto || 0), 0);
+                const descs = allDescuentos.filter(d => {
+                    if (d.trabajadorId !== emp.id) return false;
+                    const d2 = d.fecha ? new Date(d.fecha.seconds * 1000) : new Date(d.fecha);
+                    return d2 >= fechaInicio && d2 <= fechaFin && d.aplicado !== false;
+                });
+                const totalDesc = descs.reduce((acc, d) => acc + (d.monto || 0), 0);
+                const isss = calcularISSS(sueldoBase);
+                const afp = calcularAFP(sueldoBase);
+                const isr = calcularISR(sueldoBase);
+                const neto = sueldoBase + totalBono - totalDesc - isss - afp - isr;
+
+                totalSueldos += sueldoBase;
+                totalBonos += totalBono;
+                totalDescuentos += totalDesc;
+                totalNeto += neto;
+
+                rows.push({ nombre: emp.nombre || 'N/A', sueldo: sueldoBase, bonos: totalBono, descuentos: totalDesc,
+                    isss, afp, isr, neto });
+            });
+
+            document.getElementById('planTotalEmpleados').textContent = trabajadores.length;
+            document.getElementById('planTotalSueldos').textContent = '$' + totalSueldos.toFixed(2);
+            document.getElementById('planTotalBonos').textContent = '$' + totalBonos.toFixed(2);
+            document.getElementById('planTotalDescuentos').textContent = '$' + totalDescuentos.toFixed(2);
+            document.getElementById('planTotalNeto').textContent = '$' + totalNeto.toFixed(2);
+
+            const tbody = document.getElementById('planTablaBody');
+            if (rows.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-muted text-center">No hay empleados</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            rows.forEach(r => {
+                tbody.innerHTML += `
+                            <tr>
+                                <td>${r.nombre}</td>
+                                <td>$${r.sueldo.toFixed(2)}</td>
+                                <td>$${r.bonos.toFixed(2)}</td>
+                                <td>$${r.descuentos.toFixed(2)}</td>
+                                <td>$${r.isss.toFixed(2)}</td>
+                                <td>$${r.afp.toFixed(2)}</td>
+                                <td>$${r.isr.toFixed(2)}</td>
+                                <td><strong>$${r.neto.toFixed(2)}</strong></td>
+                            </tr>
+                        `;
+            });
+        }
+
+        // ================================================================
+        // 18. HISTÓRICOS
+        // ================================================================
+        function cargarHistoricos() {
+            const tbody = document.getElementById('histTablaBody');
+            const esAdmin = currentUserRole === 'admin';
+            let regs = allRegistros;
+            if (!esAdmin) regs = regs.filter(r => r.email === currentUserEmail);
+
+            const selectEmp = document.getElementById('histEmpleado');
+            if (esAdmin) {
+                selectEmp.innerHTML = '<option value="todos">Todos</option>' +
+                    allUsers.map(u => `<option value="${u.id}">${u.nombre || 'N/A'}</option>`).join('');
+            }
+
+            if (regs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-muted text-center">No hay registros</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            regs.sort((a, b) => {
+                const da = a.fecha ? new Date(a.fecha.seconds * 1000) : new Date(a.fecha);
+                const db2 = b.fecha ? new Date(b.fecha.seconds * 1000) : new Date(b.fecha);
+                return db2 - da;
+            }).forEach(r => {
+                const fecha = r.fecha ? new Date(r.fecha.seconds * 1000) : new Date(r.fecha);
+                const entrada = r.tipo === 'Entrada' ? formatTimeShort12(r.fecha) : '--:-- --';
+                const salida = r.tipo === 'Salida' ? formatTimeShort12(r.fecha) : '--:-- --';
+                tbody.innerHTML += `
+                            <tr>
+                                <td>${formatDate(fecha)}</td>
+                                <td>${r.trabajadorNombre || 'N/A'}</td>
+                                <td>${entrada}</td>
+                                <td>${salida}</td>
+                                <td>${r.horas || '--'}</td>
+                                <td>${r.tipo || '--'}</td>
+                                <td>${r.nota || '--'}</td>
+                            </tr>
+                        `;
+            });
+        }
+
+        document.getElementById('histFiltrarBtn').addEventListener('click', cargarHistoricos);
+
+        // ================================================================
+        // 19. USUARIOS
+        // ================================================================
+        function cargarUsuarios() {
+            const tbody = document.getElementById('usuTablaBody');
+            if (currentUserRole !== 'admin') {
+                tbody.innerHTML =
+                '<tr><td colspan="8" class="text-muted text-center">Acceso restringido a administradores</td></tr>';
+                return;
+            }
+            if (allUsers.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" class="text-muted text-center">No hay usuarios</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            allUsers.forEach(u => {
+                tbody.innerHTML += `
+                            <tr>
+                                <td>${u.codigo || '--'}</td>
+                                <td>${u.nombre || 'N/A'}</td>
+                                <td>${u.area || '--'}</td>
+                                <td>$${(u.sueldo || 0).toFixed(2)}</td>
+                                <td>${u.email || '--'}</td>
+                                <td>${u.rol || 'trabajador'}</td>
+                                <td>${u.activo !== false ? 'Activo' : 'Inactivo'}</td>
+                                <td><button class="btn btn-primary btn-sm editar-usuario" data-id="${u.id}"><i class="fas fa-edit"></i></button></td>
+                            </tr>
+                        `;
+            });
+        }
+
+        // ================================================================
+        // 20. BONOS
+        // ================================================================
+        function cargarBonos() {
+            const tbody = document.getElementById('bonosTablaBody');
+            if (currentUserRole !== 'admin') {
+                const misBonos = allBonos.filter(b => {
+                    const emp = allUsers.find(u => u.id === b.trabajadorId);
+                    return emp && emp.email === currentUserEmail;
+                });
+                if (misBonos.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-center">No tienes bonos</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = '';
+                misBonos.forEach(b => {
+                    const emp = allUsers.find(u => u.id === b.trabajadorId);
+                    tbody.innerHTML += `
+                                <tr>
+                                    <td>${emp ? emp.nombre : 'N/A'}</td>
+                                    <td>${b.concepto || '--'}</td>
+                                    <td>$${(b.monto || 0).toFixed(2)}</td>
+                                    <td>${formatDate(b.fecha)}</td>
+                                    <td>${b.aplicado !== false ? 'Si' : 'No'}</td>
+                                    <td>--</td>
+                                </tr>
+                            `;
+                });
+                return;
+            }
+            if (allBonos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-center">No hay bonos</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            allBonos.forEach(b => {
+                const emp = allUsers.find(u => u.id === b.trabajadorId);
+                tbody.innerHTML += `
+                            <tr>
+                                <td>${emp ? emp.nombre : 'N/A'}</td>
+                                <td>${b.concepto || '--'}</td>
+                                <td>$${(b.monto || 0).toFixed(2)}</td>
+                                <td>${formatDate(b.fecha)}</td>
+                                <td>${b.aplicado !== false ? 'Si' : 'No'}</td>
+                                <td><button class="btn btn-danger btn-sm eliminar-bono" data-id="${b.id}"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        `;
+            });
+        }
+
+        // ================================================================
+        // 21. DESCUENTOS
+        // ================================================================
+        function cargarDescuentos() {
+            const tbody = document.getElementById('descTablaBody');
+            if (currentUserRole !== 'admin') {
+                const misDescs = allDescuentos.filter(d => {
+                    const emp = allUsers.find(u => u.id === d.trabajadorId);
+                    return emp && emp.email === currentUserEmail;
+                });
+                if (misDescs.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-center">No tienes descuentos</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = '';
+                misDescs.forEach(d => {
+                    const emp = allUsers.find(u => u.id === d.trabajadorId);
+                    tbody.innerHTML += `
+                                <tr>
+                                    <td>${emp ? emp.nombre : 'N/A'}</td>
+                                    <td>${d.concepto || '--'}</td>
+                                    <td>$${(d.monto || 0).toFixed(2)}</td>
+                                    <td>${formatDate(d.fecha)}</td>
+                                    <td>${d.aplicado !== false ? 'Si' : 'No'}</td>
+                                    <td>--</td>
+                                </tr>
+                            `;
+                });
+                return;
+            }
+            if (allDescuentos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" class="text-muted text-center">No hay descuentos</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            allDescuentos.forEach(d => {
+                const emp = allUsers.find(u => u.id === d.trabajadorId);
+                tbody.innerHTML += `
+                            <tr>
+                                <td>${emp ? emp.nombre : 'N/A'}</td>
+                                <td>${d.concepto || '--'}</td>
+                                <td>$${(d.monto || 0).toFixed(2)}</td>
+                                <td>${formatDate(d.fecha)}</td>
+                                <td>${d.aplicado !== false ? 'Si' : 'No'}</td>
+                                <td><button class="btn btn-danger btn-sm eliminar-descuento" data-id="${d.id}"><i class="fas fa-trash"></i></button></td>
+                            </tr>
+                        `;
+            });
+        }
+
+        // ================================================================
+        // 22. AJUSTES
+        // ================================================================
+        document.getElementById('ajGuardarBtn').addEventListener('click', async () => {
+            try {
+                const dia1 = document.getElementById('ajDia1').value;
+                const dia2 = document.getElementById('ajDia2').value;
+                const tasaExtra = parseFloat(document.getElementById('ajTasaExtra').value) || 1.5;
+                await db.collection('config').doc('general').set({
+                    diaPago1: parseInt(dia1),
+                    diaPago2: parseInt(dia2),
+                    tasaHoraExtra: tasaExtra,
+                    actualizado: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+                alert('Configuración guardada.');
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        });
+
+        // ================================================================
+        // 23. MODALES PARA BONOS Y DESCUENTOS (simplificados)
+        // ================================================================
+        document.getElementById('bonosAgregarBtn').addEventListener('click', () => {
+            if (currentUserRole !== 'admin') return;
+            const empOptions = allUsers.map(u => `<option value="${u.id}">${u.nombre || 'N/A'}</option>`).join('');
+            mostrarModal('Agregar Bono', `
+                        <div class="form-group"><label>Empleado</label><select id="modalBonoEmp">${empOptions}</select></div>
+                        <div class="form-group"><label>Concepto</label><input type="text" id="modalBonoConcepto" /></div>
+                        <div class="form-group"><label>Monto ($)</label><input type="number" id="modalBonoMonto" step="0.01" /></div>
+                        <div class="form-group"><label>Fecha</label><input type="date" id="modalBonoFecha" value="${new Date().toISOString().split('T')[0]}" /></div>
+                        <div class="form-group"><label>Aplicado</label><select id="modalBonoAplicado"><option value="true">Si</option><option value="false">No</option></select></div>
+                    `, async () => {
+                try {
+                    await db.collection('bonos').add({
+                        trabajadorId: document.getElementById('modalBonoEmp').value,
+                        concepto: document.getElementById('modalBonoConcepto').value.trim(),
+                        monto: parseFloat(document.getElementById('modalBonoMonto').value) || 0,
+                        fecha: firebase.firestore.Timestamp.fromDate(new Date(document.getElementById(
+                            'modalBonoFecha').value)),
+                        aplicado: document.getElementById('modalBonoAplicado').value === 'true',
+                        creadoPor: currentUserEmail
+                    });
+                    alert('Bono agregado.');
+                    cerrarModal();
+                    await cargarDatosIniciales();
+                    cargarBonos();
+                } catch (error) { alert('Error: ' + error.message); }
+            });
+        });
+
+        document.getElementById('descAgregarBtn').addEventListener('click', () => {
+            if (currentUserRole !== 'admin') return;
+            const empOptions = allUsers.map(u => `<option value="${u.id}">${u.nombre || 'N/A'}</option>`).join('');
+            mostrarModal('Agregar Descuento', `
+                        <div class="form-group"><label>Empleado</label><select id="modalDescEmp">${empOptions}</select></div>
+                        <div class="form-group"><label>Concepto</label><input type="text" id="modalDescConcepto" /></div>
+                        <div class="form-group"><label>Monto ($)</label><input type="number" id="modalDescMonto" step="0.01" /></div>
+                        <div class="form-group"><label>Fecha</label><input type="date" id="modalDescFecha" value="${new Date().toISOString().split('T')[0]}" /></div>
+                        <div class="form-group"><label>Aplicado</label><select id="modalDescAplicado"><option value="true">Si</option><option value="false">No</option></select></div>
+                    `, async () => {
+                try {
+                    await db.collection('descuentos').add({
+                        trabajadorId: document.getElementById('modalDescEmp').value,
+                        concepto: document.getElementById('modalDescConcepto').value.trim(),
+                        monto: parseFloat(document.getElementById('modalDescMonto').value) || 0,
+                        fecha: firebase.firestore.Timestamp.fromDate(new Date(document.getElementById(
+                            'modalDescFecha').value)),
+                        aplicado: document.getElementById('modalDescAplicado').value === 'true',
+                        creadoPor: currentUserEmail
+                    });
+                    alert('Descuento agregado.');
+                    cerrarModal();
+                    await cargarDatosIniciales();
+                    cargarDescuentos();
+                } catch (error) { alert('Error: ' + error.message); }
+            });
+        });
+
+        // ================================================================
+        // 24. MODAL GENÉRICO
+        // ================================================================
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalBody = document.getElementById('modalBody');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalCloseBtn = document.getElementById('modalCloseBtn');
+
+        function mostrarModal(titulo, contenido, onConfirm) {
+            modalTitle.textContent = titulo;
+            modalBody.innerHTML = contenido;
+            modalOverlay.classList.add('open');
+            const newConfirm = modalConfirmBtn.cloneNode(true);
+            const newCancel = modalCancelBtn.cloneNode(true);
+            modalConfirmBtn.parentNode.replaceChild(newConfirm, modalConfirmBtn);
+            modalCancelBtn.parentNode.replaceChild(newCancel, modalCancelBtn);
+            newConfirm.addEventListener('click', () => { if (onConfirm) onConfirm(); });
+            newCancel.addEventListener('click', cerrarModal);
+            modalCloseBtn.addEventListener('click', cerrarModal);
+            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
+        }
+
+        function cerrarModal() {
+            modalOverlay.classList.remove('open');
+        }
+
+        // ================================================================
+        // 25. INICIALIZACIÓN
+        // ================================================================
+        console.log('App cargada correctamente.');
+        console.log('Usuario:', currentUserEmail);
+        console.log('Rol:', currentUserRole);
     </script>
 </body>
 </html>
