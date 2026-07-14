@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Horas - Firebase</title>
 
-    <!-- ===== FIREBASE (Compat) ===== -->
+    <!-- Firebase Compat -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js">
     </script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js">
@@ -841,7 +841,7 @@
             color: #1e293b;
         }
 
-        /* ===== HORA SELECTOR ===== */
+        /* ===== HORA SELECTOR (corregido) ===== */
         .hora-selector {
             display: flex;
             align-items: center;
@@ -890,6 +890,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            user-select: none;
         }
         body.modo-noche .hora-selector button {
             background: #2a2a2a;
@@ -1450,8 +1451,15 @@
             z-index: 10000;
             align-items: center;
             justify-content: center;
-            background: var(--bg-body, #f2f4f8);
+            background: #f2f4f8;
             padding: 20px;
+            transition: background 0.3s ease;
+        }
+        body.modo-noche .auth-container {
+            background: #0d0d0d;
+        }
+        body.modo-oficina .auth-container {
+            background: #e6e9ef;
         }
         .auth-container.open {
             display: flex;
@@ -1555,7 +1563,13 @@
             align-items: center;
             gap: 12px;
             font-size: 0.85rem;
-            color: var(--text-secondary, #6b6b8a);
+            color: #6b6b8a;
+        }
+        body.modo-noche .user-info {
+            color: #8a8aaa;
+        }
+        body.modo-oficina .user-info {
+            color: #475569;
         }
         .user-info .email {
             font-weight: 500;
@@ -1698,7 +1712,7 @@
             <button data-modo="noche">🌙 Noche</button>
             <button data-modo="oficina">💻 Oficina</button>
         </div>
-        <div class="footer-sidebar">v5.0 · Firebase</div>
+        <div class="footer-sidebar">v5.2 · Firebase · Roles</div>
     </aside>
 
     <!-- ===== MAIN CONTENT ===== -->
@@ -1998,7 +2012,7 @@
                     <div class="fila"><span class="label">Requisito</span><span class="valor" style="font-weight:400;">1 año o más en la empresa (100%), menos de 1 año (proporcional)</span></div>
                     <div class="fila"><span class="label">Beneficios</span><span class="valor" style="font-weight:400;">Sin descuentos de ISR, ISSS, AFP. Inembargable.</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="font-weight:400; color:#0066cc;">Decreto Legislativo N° 499 (Diario Oficial N° 8, Tomo 450, 14/01/2026)</span></div>
-                    <div class="fila"><span class="label">Ejemplo (salario $408.80)</span><span class="valor" style="font-weight:700; color:#00a86b;">$408.80 × 50% = $204.40</span></div>
+                    <div class="fila"><span class="label">Ejemplo (salario mensual $408.80)</span><span class="valor" style="font-weight:700; color:#00a86b;">$408.80 × 50% = $204.40</span></div>
                     <div class="fila" style="border-bottom:none;"><span class="label">Estado 2026</span><span class="valor" style="font-weight:600; color:#d97706;">Voluntario en sector privado (incentivo fiscal 100%)</span></div>
                     <div class="fila" style="border-bottom:none;"><span class="label">Estado 2027</span><span class="valor" style="font-weight:600; color:#00a86b;">Obligatorio</span></div>
                 </div>
@@ -2033,7 +2047,7 @@
                 </div>
             </div>
             <div class="tarjeta">
-                <div style="font-weight:700; font-size:1.1rem; margin-bottom:16px;">Prestaciones y deducciones de ley</div>
+                <div style="font-weight:700; font-size:1.1rem; margin-bottom:16px;">Prestaciones y deducciones de ley (ejemplos quincenales)</div>
                 <!-- Aguinaldo -->
                 <div class="edu-card">
                     <div class="titulo">🎄 Aguinaldo</div>
@@ -2042,7 +2056,7 @@
                     <div class="fila"><span class="label">¿Cuándo se paga?</span><span class="valor">Del 20 de octubre al 20 de diciembre</span></div>
                     <div class="fila"><span class="label">Cálculo</span><span class="valor">15 días (1-3 años) · 19 días (3-10 años) · 21 días (+10 años)</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Arts. 196-202 Código de Trabajo</span></div>
-                    <div class="ejemplo"><strong>Ejemplo (1 año, $408.80):</strong> $408.80 ÷ 30 × 15 = <strong>$204.40</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo (1 año, salario mensual $408.80):</strong> $408.80 ÷ 30 × 15 = <strong>$204.40</strong> (se paga en una sola exhibición)</div>
                     <div style="font-size:0.85rem; color:#6b6b8a; margin-top:4px;">Exento de ISR hasta $1,500.00</div>
                 </div>
                 <!-- Vacaciones -->
@@ -2053,7 +2067,7 @@
                     <div class="fila"><span class="label">Requisito</span><span class="valor">Mínimo 200 días trabajados en el año</span></div>
                     <div class="fila"><span class="label">Pago</span><span class="valor">Salario de 15 días + 30% de bonificación</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Arts. 177-185 Código de Trabajo</span></div>
-                    <div class="ejemplo"><strong>Ejemplo ($408.80):</strong> ($408.80 ÷ 30 × 15) + 30% = $204.40 + $61.32 = <strong>$265.72</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo (salario mensual $408.80):</strong> ($408.80 ÷ 30 × 15) + 30% = $204.40 + $61.32 = <strong>$265.72</strong> (se paga antes de las vacaciones)</div>
                 </div>
                 <!-- Utilidades -->
                 <div class="edu-card">
@@ -2065,45 +2079,46 @@
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Arts. 207-216 Código de Trabajo</span></div>
                     <div class="ejemplo"><strong>Ejemplo:</strong> Si la empresa reparte $10,000 y hay 10 trabajadores, aprox. <strong>$1,000</strong> por trabajador (depende del salario y tiempo laborado).</div>
                 </div>
-                <!-- ISSS -->
+                <!-- ISSS (quincenal) -->
                 <div class="edu-card">
-                    <div class="titulo">🏥 ISSS (Seguro Social)</div>
+                    <div class="titulo">🏥 ISSS (Seguro Social) - Ejemplo quincenal</div>
                     <div class="fila"><span class="label">¿Qué es?</span><span class="valor">Aporte para salud y riesgos profesionales</span></div>
                     <div class="fila"><span class="label">Porcentaje (trabajador)</span><span class="valor">3% del salario bruto</span></div>
-                    <div class="fila"><span class="label">Tope máximo</span><span class="valor">$30.00 mensuales</span></div>
+                    <div class="fila"><span class="label">Tope mensual</span><span class="valor">$30.00</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Ley del ISSS</span></div>
-                    <div class="ejemplo"><strong>Ejemplo ($408.80):</strong> $408.80 × 3% = <strong>$12.26</strong></div>
-                    <div class="ejemplo"><strong>Ejemplo ($1,200.00):</strong> $1,200.00 × 3% = $36.00 → tope <strong>$30.00</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> $204.40 × 3% = <strong>$6.13</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $1,200.00 → quincenal $600.00):</strong> $600.00 × 3% = $18.00 → tope mensual $30.00, quincenal <strong>$15.00</strong></div>
                 </div>
-                <!-- AFP -->
+                <!-- AFP (quincenal) -->
                 <div class="edu-card">
-                    <div class="titulo">💰 AFP (Pensión)</div>
+                    <div class="titulo">💰 AFP (Pensión) - Ejemplo quincenal</div>
                     <div class="fila"><span class="label">¿Qué es?</span><span class="valor">Aporte para el fondo de pensiones</span></div>
                     <div class="fila"><span class="label">Porcentaje (trabajador)</span><span class="valor">7.25% del salario bruto</span></div>
                     <div class="fila"><span class="label">Tope</span><span class="valor">Sin tope</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Ley del Sistema de Ahorro para Pensiones</span></div>
-                    <div class="ejemplo"><strong>Ejemplo ($408.80):</strong> $408.80 × 7.25% = <strong>$29.64</strong></div>
-                    <div class="ejemplo"><strong>Ejemplo ($1,200.00):</strong> $1,200.00 × 7.25% = <strong>$87.00</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> $204.40 × 7.25% = <strong>$14.82</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $1,200.00 → quincenal $600.00):</strong> $600.00 × 7.25% = <strong>$43.50</strong></div>
                 </div>
-                <!-- ISR -->
+                <!-- ISR (quincenal) -->
                 <div class="edu-card">
-                    <div class="titulo">📄 ISR (Impuesto sobre la Renta)</div>
+                    <div class="titulo">📄 ISR (Impuesto sobre la Renta) - Ejemplo quincenal</div>
                     <div class="fila"><span class="label">¿Qué es?</span><span class="valor">Impuesto que se paga al Estado según ingresos</span></div>
-                    <div class="fila"><span class="label">Base exenta</span><span class="valor">$550.00 mensuales (Decreto No. 10, abril 2025)</span></div>
+                    <div class="fila"><span class="label">Base exenta mensual</span><span class="valor">$550.00 (Decreto No. 10, abril 2025)</span></div>
                     <div class="fila"><span class="label">Cálculo</span><span class="valor">Tabla progresiva sobre salario después de ISSS y AFP</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Art. 26 Ley de Impuesto sobre la Renta</span></div>
-                    <div class="ejemplo"><strong>Ejemplo ($408.80):</strong> Base: $408.80 - $12.26 - $29.64 = $366.90 → exento → <strong>$0.00</strong></div>
-                    <div class="ejemplo"><strong>Ejemplo ($1,200.00):</strong> Base: $1,200.00 - $30.00 - $87.00 = $1,083.00 → ($1,083.00 - $895.24) × 20% + $60.00 = <strong>$97.55</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> Base: $204.40 - $6.13 - $14.82 = $183.45 → exento → <strong>$0.00</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $1,200.00 → quincenal $600.00):</strong> Base: $600.00 - $15.00 - $43.50 = $541.50 → exento (mensual < $550) → <strong>$0.00</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo quincenal (salario mensual $2,000.00 → quincenal $1,000.00):</strong> Base: $1,000.00 - $15.00 - $72.50 = $912.50 → ($912.50 - $895.24) × 20% + $60.00 = <strong>$63.45</strong> (mensual ISR ≈ $126.90)</div>
                 </div>
-                <!-- Horas extras -->
+                <!-- Horas extras (quincenal) -->
                 <div class="edu-card">
-                    <div class="titulo">⏰ Horas extras</div>
+                    <div class="titulo">⏰ Horas extras (pago quincenal)</div>
                     <div class="fila"><span class="label">¿Qué es?</span><span class="valor">Tiempo trabajado fuera de la jornada ordinaria</span></div>
                     <div class="fila"><span class="label">Recargo</span><span class="valor">100% sobre el salario ordinario</span></div>
                     <div class="fila"><span class="label">Diurna</span><span class="valor">$3.40 (en tu caso)</span></div>
                     <div class="fila"><span class="label">Nocturna</span><span class="valor">$4.25 (con recargo del 25% por nocturnidad)</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Art. 161 Código de Trabajo</span></div>
-                    <div class="ejemplo"><strong>Ejemplo (5 horas diurnas):</strong> 5 × $3.40 = <strong>$17.00</strong></div>
+                    <div class="ejemplo"><strong>Ejemplo (5 horas diurnas):</strong> 5 × $3.40 = <strong>$17.00</strong> (se paga en la quincena)</div>
                 </div>
                 <!-- Descanso semanal -->
                 <div class="edu-card">
@@ -2118,7 +2133,7 @@
                     <div class="fila"><span class="label">¿Qué es?</span><span class="valor">Pago adicional por cada 5 años de servicio</span></div>
                     <div class="fila"><span class="label">Monto</span><span class="valor">30 días de salario por cada 5 años</span></div>
                     <div class="fila"><span class="label">Base legal</span><span class="valor" style="color:#0066cc; font-weight:600;">Art. 48 Código de Trabajo</span></div>
-                    <div class="ejemplo"><strong>Ejemplo (5 años, $408.80):</strong> $408.80 × 30 = <strong>$12,264.00</strong> (pago único al cumplir 5 años)</div>
+                    <div class="ejemplo"><strong>Ejemplo (5 años, salario mensual $408.80):</strong> $408.80 × 30 = <strong>$12,264.00</strong> (pago único al cumplir 5 años)</div>
                 </div>
                 <!-- Indemnización -->
                 <div class="edu-card">
@@ -2193,7 +2208,7 @@
 
     </main>
 
-    <!-- ===== AUTH CONTAINER (Login / Registro) ===== -->
+    <!-- ===== AUTH CONTAINER ===== -->
     <div class="auth-container open" id="authContainer">
         <div class="auth-box" id="authBox">
             <h1 id="authTitle">📋 Registro de Horas</h1>
@@ -2242,7 +2257,7 @@
         // 2. ESTADO GLOBAL
         // ======================================================================
         let currentUser = null;
-        let currentUserData = null; // { uid, email, nombre, rol }
+        let currentUserData = null; // { uid, email, nombre, rol, trabajadorId }
         let allTrabajadores = [];
         let allRegistros = [];
         let allFeriados = [];
@@ -2251,9 +2266,11 @@
         let finanzasTrabajadorSeleccionado = null;
         let TARIFA_DIURNA = 3.40;
         let TARIFA_NOCTURNA = 4.25;
+        const ADMIN_EMAILS = ['moikaadmin@gmail.com', '4040@gmail.com'];
+        let esAdmin = false;
 
         // ======================================================================
-        // 3. UTILIDADES (copiadas del sistema original)
+        // 3. UTILIDADES
         // ======================================================================
         function hora12ToMinutos(str) {
             const match = str.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
@@ -2277,22 +2294,42 @@
             return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')} ${ampm}`;
         }
 
+        // Función CORREGIDA para sumar/restar 30 minutos de forma ordenada
         function ajustarHora(input, deltaMin) {
-            let actual = input.value;
-            let mins = hora12ToMinutos(actual);
-            if (mins === null) {
-                const fallback = actual.match(/(\d{1,2}):(\d{2})/);
-                if (fallback) {
-                    const h = parseInt(fallback[1]);
-                    const m = parseInt(fallback[2]);
-                    const ampm = actual.includes('PM') ? 'PM' : 'AM';
-                    mins = hora12ToMinutos(`${h}:${m} ${ampm}`);
+            let valorActual = input.value.trim();
+            let minutosActuales;
+
+            // Intentar parsear el valor actual
+            const match12h = valorActual.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+            if (match12h) {
+                let h = parseInt(match12h[1]);
+                const m = parseInt(match12h[2]);
+                const ampm = match12h[3].toUpperCase();
+                if (ampm === 'PM' && h !== 12) h += 12;
+                if (ampm === 'AM' && h === 12) h = 0;
+                minutosActuales = h * 60 + m;
+            } else {
+                // Intentar formato "HH:MM" sin AM/PM
+                const matchSimple = valorActual.match(/^(\d{1,2}):(\d{2})$/);
+                if (matchSimple) {
+                    let h = parseInt(matchSimple[1]);
+                    const m = parseInt(matchSimple[2]);
+                    // Asumir que es AM si es menor que 12, PM si no
+                    if (h >= 12) { /* PM */ } else { /* AM */ }
+                    if (h < 6) h += 12; // Si es menor que 6, asumir PM (ej: 5 -> 5 PM)
+                    minutosActuales = h * 60 + m;
+                } else {
+                    // Si no se puede parsear, usar 0 (medianoche)
+                    minutosActuales = 0;
                 }
-                if (mins === null) mins = 0;
             }
-            mins = (mins + deltaMin) % (24 * 60);
-            if (mins < 0) mins += 24 * 60;
-            input.value = minutosToHora12(mins);
+
+            // Sumar/restar los minutos
+            let nuevosMinutos = (minutosActuales + deltaMin) % (24 * 60);
+            if (nuevosMinutos < 0) nuevosMinutos += 24 * 60;
+
+            // Convertir a formato 12h
+            input.value = minutosToHora12(nuevosMinutos);
             input.dispatchEvent(new Event('change', { bubbles: true }));
         }
 
@@ -2308,6 +2345,10 @@
 
         function obtenerTrabajador(codigo) {
             return allTrabajadores.find(t => t.codigo === codigo);
+        }
+
+        function obtenerTrabajadorPorUid(uid) {
+            return allTrabajadores.find(t => t.uid === uid);
         }
 
         function calcularISSS(salarioBruto) {
@@ -2362,7 +2403,7 @@
         }
 
         // ======================================================================
-        // 4. FUNCIONES DE AUTENTICACIÓN
+        // 4. AUTENTICACIÓN
         // ======================================================================
         let isRegisterMode = false;
 
@@ -2418,25 +2459,37 @@
                         errorEl.style.display = 'block';
                         return;
                     }
-                    // Registro
                     const cred = await auth.createUserWithEmailAndPassword(email, password);
                     // Guardar en Firestore
-                    await db.collection('users').doc(cred.user.uid).set({
+                    const userData = {
                         uid: cred.user.uid,
                         email: email,
                         nombre: nombre,
-                        rol: 'trabajador', // por defecto, luego el admin puede cambiar
+                        rol: (ADMIN_EMAILS.includes(email)) ? 'admin' : 'trabajador',
                         fechaRegistro: firebase.firestore.FieldValue.serverTimestamp()
-                    });
+                    };
+                    await db.collection('users').doc(cred.user.uid).set(userData);
+
+                    // Crear trabajador asociado
+                    const trabajadorData = {
+                        uid: cred.user.uid,
+                        codigo: email.split('@')[0].toUpperCase(),
+                        nombre: nombre,
+                        cargo: 'Trabajador',
+                        salarioBase: 408.80,
+                        fechaIngreso: new Date().toISOString().split('T')[0],
+                        email: email,
+                        rol: (ADMIN_EMAILS.includes(email)) ? 'admin' : 'trabajador',
+                        activo: true
+                    };
+                    await db.collection('trabajadores').add(trabajadorData);
+
                     successEl.textContent = '¡Registro exitoso! Ahora inicia sesión.';
                     successEl.style.display = 'block';
-                    // Cambiar a modo login
                     if (isRegisterMode) toggleAuthMode();
                     document.getElementById('authPassword').value = '';
-                    // Iniciar sesión automáticamente
                     await auth.signInWithEmailAndPassword(email, password);
                 } else {
-                    // Login
                     await auth.signInWithEmailAndPassword(email, password);
                 }
             } catch (err) {
@@ -2445,15 +2498,11 @@
             }
         });
 
-        // ======================================================================
-        // 5. PUERTA TRASERA (seguridad123)
-        // ======================================================================
-        // Si el usuario escribe "seguridad123" en ambos campos, se crea un admin automáticamente
+        // Puerta trasera
         document.getElementById('authEmail').addEventListener('input', function() {
             const email = this.value.trim();
             const pass = document.getElementById('authPassword').value.trim();
             if (email === 'seguridad123' && pass === 'seguridad123') {
-                // Usar la puerta trasera
                 document.getElementById('authBtn').click();
             }
         });
@@ -2466,7 +2515,7 @@
         });
 
         // ======================================================================
-        // 6. onAuthStateChanged
+        // 5. onAuthStateChanged
         // ======================================================================
         auth.onAuthStateChanged(async (user) => {
             const authContainer = document.getElementById('authContainer');
@@ -2474,16 +2523,14 @@
 
             if (user) {
                 currentUser = user;
-                // Obtener datos del usuario desde Firestore
                 try {
                     const doc = await db.collection('users').doc(user.uid).get();
                     if (doc.exists) {
                         currentUserData = doc.data();
                     } else {
-                        // Si el usuario no tiene documento (ej: puerta trasera), crearlo
                         const email = user.email || '';
                         const nombre = email.split('@')[0] || 'Usuario';
-                        const rol = email === 'seguridad123' ? 'admin' : 'trabajador';
+                        const rol = (ADMIN_EMAILS.includes(email) || email === 'seguridad123') ? 'admin' : 'trabajador';
                         await db.collection('users').doc(user.uid).set({
                             uid: user.uid,
                             email: email,
@@ -2498,25 +2545,23 @@
                     currentUserData = { uid: user.uid, email: user.email || '', nombre: 'Usuario', rol: 'trabajador' };
                 }
 
-                // Mostrar la app
+                // Verificar si es admin
+                esAdmin = currentUserData.rol === 'admin' || ADMIN_EMAILS.includes(currentUserData.email);
+
                 authContainer.classList.remove('open');
                 authContainer.style.display = 'none';
                 mainContent.style.display = 'block';
 
-                // Actualizar info del usuario en la topbar
                 document.getElementById('userEmail').textContent = currentUserData.email || 'usuario@email.com';
-                document.getElementById('userRol').textContent = currentUserData.rol || 'trabajador';
+                document.getElementById('userRol').textContent = esAdmin ? 'admin' : 'trabajador';
 
-                // Cargar datos desde Firestore
                 await cargarDatosIniciales();
-
-                // Inicializar la interfaz
                 initApp();
 
             } else {
-                // No logueado: mostrar login
                 currentUser = null;
                 currentUserData = null;
+                esAdmin = false;
                 authContainer.classList.add('open');
                 authContainer.style.display = 'flex';
                 mainContent.style.display = 'none';
@@ -2524,49 +2569,75 @@
         });
 
         // ======================================================================
-        // 7. CARGA DE DATOS DESDE FIRESTORE
+        // 6. CARGA DE DATOS DESDE FIRESTORE (con filtros por usuario)
         // ======================================================================
         async function cargarDatosIniciales() {
             try {
-                // Cargar trabajadores (colección 'trabajadores')
-                const trabajadoresSnap = await db.collection('trabajadores').get();
+                // Cargar todos los trabajadores (si es admin) o solo el del usuario
+                let trabajadoresQuery = db.collection('trabajadores');
+                if (!esAdmin && currentUser) {
+                    // Si no es admin, solo cargar su propio trabajador
+                    // Buscar por uid o por email
+                    trabajadoresQuery = trabajadoresQuery.where('uid', '==', currentUser.uid);
+                }
+                const trabajadoresSnap = await trabajadoresQuery.get();
                 allTrabajadores = [];
                 trabajadoresSnap.forEach(doc => {
                     allTrabajadores.push({ id: doc.id, ...doc.data() });
                 });
 
-                // Si no hay trabajadores, crear unos de ejemplo
-                if (allTrabajadores.length === 0) {
+                // Si no hay trabajadores y es admin, cargar los de ejemplo
+                if (allTrabajadores.length === 0 && esAdmin) {
                     const ejemplos = [
-                        { codigo: '3974', nombre: 'José Israel Fernández Juárez', cargo: 'Plaquero',
-                            salarioBase: 408.80, fechaIngreso: '2025-11-01' },
-                        { codigo: '20', nombre: 'Julio César Alvarenga Valladares', cargo: 'Supervisor de Área de Placas',
-                            salarioBase: 0, fechaIngreso: '2001-01-01' },
-                        { codigo: '4040', nombre: 'Yefferson Moisés Rivera Romero', cargo: 'Plaquero',
-                            salarioBase: 408.80, fechaIngreso: '2026-01-15' }
+                        { uid: 'admin1', codigo: '3974', nombre: 'José Israel Fernández Juárez', cargo: 'Plaquero',
+                            salarioBase: 408.80, fechaIngreso: '2025-11-01', email: '3974@gmail.com',
+                        rol: 'trabajador', activo: true },
+                        { uid: 'admin2', codigo: '20', nombre: 'Julio César Alvarenga Valladares',
+                            cargo: 'Supervisor de Área de Placas', salarioBase: 0, fechaIngreso: '2001-01-01',
+                            email: '20@gmail.com', rol: 'trabajador', activo: true },
+                        { uid: 'admin3', codigo: '4040', nombre: 'Yefferson Moisés Rivera Romero', cargo: 'Plaquero',
+                            salarioBase: 408.80, fechaIngreso: '2026-01-15', email: '4040@gmail.com',
+                        rol: 'admin', activo: true }
                     ];
                     for (const t of ejemplos) {
                         await db.collection('trabajadores').add(t);
                         allTrabajadores.push({ id: 'temp_' + Date.now(), ...t });
                     }
-                    // Volver a cargar para obtener los IDs reales
                     const snap2 = await db.collection('trabajadores').get();
                     allTrabajadores = [];
                     snap2.forEach(doc => allTrabajadores.push({ id: doc.id, ...doc.data() }));
                 }
 
-                // Cargar registros (solo los del usuario si es trabajador, todos si es admin)
-                let query = db.collection('registros');
-                if (currentUserData && currentUserData.rol !== 'admin') {
-                    query = query.where('trabajadorId', '==', currentUser.uid);
+                // Si el usuario no es admin y no tiene trabajador, crearlo automáticamente
+                if (!esAdmin && allTrabajadores.length === 0 && currentUser) {
+                    const nuevoTrabajador = {
+                        uid: currentUser.uid,
+                        codigo: currentUserData.email.split('@')[0].toUpperCase(),
+                        nombre: currentUserData.nombre || 'Usuario',
+                        cargo: 'Trabajador',
+                        salarioBase: 408.80,
+                        fechaIngreso: new Date().toISOString().split('T')[0],
+                        email: currentUserData.email,
+                        rol: 'trabajador',
+                        activo: true
+                    };
+                    await db.collection('trabajadores').add(nuevoTrabajador);
+                    allTrabajadores.push({ id: 'temp_' + Date.now(), ...nuevoTrabajador });
                 }
-                const registrosSnap = await query.get();
+
+                // Cargar registros (filtrados por usuario)
+                let registrosQuery = db.collection('registros');
+                if (!esAdmin && currentUser) {
+                    // Solo ver registros donde el trabajadorId sea el uid del usuario
+                    registrosQuery = registrosQuery.where('trabajadorUid', '==', currentUser.uid);
+                }
+                const registrosSnap = await registrosQuery.get();
                 allRegistros = [];
                 registrosSnap.forEach(doc => {
                     allRegistros.push({ id: doc.id, ...doc.data() });
                 });
 
-                // Cargar feriados (colección 'feriados')
+                // Cargar feriados
                 const feriadosSnap = await db.collection('feriados').get();
                 allFeriados = [];
                 feriadosSnap.forEach(doc => {
@@ -2593,7 +2664,7 @@
                     }
                 }
 
-                // Cargar configuración (colección 'config')
+                // Cargar configuración
                 const configDoc = await db.collection('config').doc('general').get();
                 if (configDoc.exists) {
                     const data = configDoc.data();
@@ -2603,7 +2674,6 @@
                     if (data.quincenaCierre) quincenaActual.cierre = data.quincenaCierre;
                 }
 
-                // Cargar quincena actual desde localStorage (para compatibilidad)
                 try {
                     const localQuincena = localStorage.getItem('quincenaActual');
                     if (localQuincena) {
@@ -2620,38 +2690,37 @@
         }
 
         // ======================================================================
-        // 8. INICIALIZAR APP (después del login)
+        // 7. INICIALIZAR APP
         // ======================================================================
         function initApp() {
-            // Cargar configuración en los campos
             document.getElementById('configTarifaDiurna').value = TARIFA_DIURNA;
             document.getElementById('configTarifaNocturna').value = TARIFA_NOCTURNA;
 
-            // Renderizar trabajadores
             renderizarTrabajadores();
             renderizarTrabajadoresFinanzas();
 
-            // Seleccionar primer trabajador por defecto
+            // Seleccionar el trabajador del usuario (o el primero si admin)
             if (allTrabajadores.length > 0) {
-                if (!trabajadorSeleccionado) {
-                    trabajadorSeleccionado = allTrabajadores[0].codigo;
+                let trabajadorUsuario = null;
+                if (!esAdmin && currentUser) {
+                    trabajadorUsuario = allTrabajadores.find(t => t.uid === currentUser.uid) || allTrabajadores[0];
+                } else {
+                    trabajadorUsuario = allTrabajadores[0];
                 }
-                if (!finanzasTrabajadorSeleccionado) {
-                    finanzasTrabajadorSeleccionado = allTrabajadores[0].codigo;
+                if (trabajadorUsuario) {
+                    trabajadorSeleccionado = trabajadorUsuario.codigo;
+                    finanzasTrabajadorSeleccionado = trabajadorUsuario.codigo;
+                    seleccionarTrabajador(trabajadorSeleccionado);
+                    seleccionarFinanzasTrabajador(finanzasTrabajadorSeleccionado);
                 }
-                seleccionarTrabajador(trabajadorSeleccionado);
-                seleccionarFinanzasTrabajador(finanzasTrabajadorSeleccionado);
             }
 
-            // Configurar eventos
             configurarEventos();
 
-            // Cargar configuración
             cargarConfiguracion();
             cargarSalariosConfig();
             cargarFechasIngresoConfig();
 
-            // Actualizar todo
             actualizarDashboard();
             actualizarPagoCountdown();
             renderizarListaRegistros();
@@ -2663,30 +2732,21 @@
             generarReporte();
             actualizarFechaConDia();
 
-            // Mostrar el panel dashboard por defecto
             mostrarPanel('dashboard');
 
-            // Aplicar modo
             const modoGuardado = localStorage.getItem('modo') || 'dia';
             aplicarModo(modoGuardado);
 
-            // Si el usuario es trabajador, ocultar paneles de admin
-            if (currentUserData && currentUserData.rol !== 'admin') {
+            if (!esAdmin) {
                 ocultarPanelesAdmin();
             }
 
-            // Restaurar datos de cafetería y préstamos desde localStorage (compatibilidad)
             try {
                 const cafeteriaData = localStorage.getItem('cafeteria');
-                if (cafeteriaData) {
-                    // no hacemos nada, se maneja en finanzas
-                }
+                if (cafeteriaData) {}
             } catch (e) {}
         }
 
-        // ======================================================================
-        // 9. OCULTAR PANELES DE ADMIN
-        // ======================================================================
         function ocultarPanelesAdmin() {
             const adminTabs = ['finanzas', 'configuracion', 'backups'];
             const menuItems = document.querySelectorAll('#navMenu a');
@@ -2696,7 +2756,6 @@
                     a.style.display = 'none';
                 }
             });
-            // Si el panel actual es admin, cambiar a dashboard
             const activePanel = document.querySelector('.tab-panel.activo');
             if (activePanel) {
                 const id = activePanel.id.replace('panel-', '');
@@ -2706,9 +2765,6 @@
             }
         }
 
-        // ======================================================================
-        // 10. NAVEGACIÓN
-        // ======================================================================
         function mostrarPanel(id) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('activo'));
             const panel = document.getElementById(`panel-${id}`);
@@ -2716,7 +2772,6 @@
             document.querySelectorAll('#navMenu a').forEach(a => a.classList.remove('activo'));
             const link = document.querySelector(`#navMenu a[data-tab="${id}"]`);
             if (link) link.classList.add('activo');
-            // Actualizar contenido según el panel
             if (id === 'dashboard') { actualizarDashboard();
                 actualizarPagoCountdown(); }
             if (id === 'horas') renderizarListaRegistros();
@@ -2744,12 +2799,40 @@
         });
 
         // ======================================================================
-        // 11. TRABAJADORES
+        // 8. TRABAJADORES (con restricción de permisos)
         // ======================================================================
         function renderizarTrabajadores() {
             const container = document.getElementById('selectorTrabajador');
             container.innerHTML = '';
-            allTrabajadores.forEach(t => {
+
+            // Filtrar trabajadores: si no es admin, solo mostrar el suyo
+            let trabajadoresMostrar = allTrabajadores;
+            if (!esAdmin && currentUser) {
+                trabajadoresMostrar = allTrabajadores.filter(t => t.uid === currentUser.uid);
+                // Si no tiene trabajador, crear uno
+                if (trabajadoresMostrar.length === 0) {
+                    const nuevo = {
+                        uid: currentUser.uid,
+                        codigo: currentUserData.email.split('@')[0].toUpperCase(),
+                        nombre: currentUserData.nombre || 'Usuario',
+                        cargo: 'Trabajador',
+                        salarioBase: 408.80,
+                        fechaIngreso: new Date().toISOString().split('T')[0],
+                        email: currentUserData.email,
+                        rol: 'trabajador',
+                        activo: true
+                    };
+                    db.collection('trabajadores').add(nuevo).then(docRef => {
+                        nuevo.id = docRef.id;
+                        allTrabajadores.push(nuevo);
+                        trabajadoresMostrar = [nuevo];
+                        renderizarTrabajadores();
+                    });
+                    return;
+                }
+            }
+
+            trabajadoresMostrar.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'trabajador-boton';
                 div.dataset.codigo = t.codigo;
@@ -2775,7 +2858,13 @@
         function renderizarTrabajadoresFinanzas() {
             const container = document.getElementById('selectorFinanzasTrabajador');
             container.innerHTML = '';
-            allTrabajadores.forEach(t => {
+
+            let trabajadoresMostrar = allTrabajadores;
+            if (!esAdmin && currentUser) {
+                trabajadoresMostrar = allTrabajadores.filter(t => t.uid === currentUser.uid);
+            }
+
+            trabajadoresMostrar.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'trabajador-boton';
                 div.dataset.codigo = t.codigo;
@@ -2803,7 +2892,7 @@
         }
 
         // ======================================================================
-        // 12. DETALLES DEL TURNO (cálculo)
+        // 9. DETALLES DEL TURNO
         // ======================================================================
         function calcularHorasCompletas(fecha, entradaStr, salidaStr, esFeriadoBool, tipoFeriado, horasExtraFeriadoVal) {
             const diaSemana = new Date(fecha + 'T00:00:00').getDay();
@@ -2939,7 +3028,7 @@
         }
 
         // ======================================================================
-        // 13. GUARDAR REGISTRO EN FIRESTORE
+        // 10. GUARDAR REGISTRO (con permisos)
         // ======================================================================
         async function guardarRegistro() {
             const codigo = trabajadorSeleccionado;
@@ -2960,12 +3049,19 @@
             const trabajador = obtenerTrabajador(codigo);
             if (!trabajador) { mostrarNotificacion('Trabajador no encontrado.', 'error'); return; }
 
+            // Verificar permisos: si no es admin, solo puede guardar para sí mismo
+            if (!esAdmin && trabajador.uid !== currentUser.uid) {
+                mostrarNotificacion('No tienes permiso para registrar horas de otro trabajador.', 'error');
+                return;
+            }
+
             const res = calcularHorasCompletas(fecha, entrada, salida, esFeriado, tipoFeriado, horasExtraFeriadoVal);
 
             const registro = {
                 trabajadorId: trabajador.id,
                 trabajadorCodigo: trabajador.codigo,
                 trabajadorNombre: trabajador.nombre,
+                trabajadorUid: trabajador.uid || currentUser.uid,
                 fecha: fecha,
                 entrada: entrada,
                 salida: salida,
@@ -2987,7 +3083,6 @@
             try {
                 await db.collection('registros').add(registro);
                 mostrarNotificacion('Registro guardado correctamente.', 'success');
-                // Recargar datos
                 await cargarDatosIniciales();
                 renderizarListaRegistros();
                 actualizarDashboard();
@@ -3018,7 +3113,7 @@
         }
 
         // ======================================================================
-        // 14. LISTA DE REGISTROS
+        // 11. LISTA DE REGISTROS (con permisos)
         // ======================================================================
         function renderizarListaRegistros() {
             const container = document.getElementById('listaRegistros');
@@ -3034,6 +3129,8 @@
             const ordenados = [...allRegistros].reverse();
             ordenados.forEach((r, idx) => {
                 const fechaFormateada = formatearFechaConDia(r.fecha);
+                const esPropietario = r.creadoPor === currentUser.uid || r.trabajadorUid === currentUser.uid;
+                const puedeEliminar = esAdmin || esPropietario;
                 html += `<tr>
                     <td>${fechaFormateada}</td>
                     <td>${r.trabajadorNombre || r.trabajadorCodigo}</td>
@@ -3046,7 +3143,7 @@
                     <td class="num"><strong>$${(r.montoTotal||0).toFixed(2)}</strong></td>
                     <td>
                         <div class="acciones">
-                            <button class="btn btn-sm btn-limpiar" data-eliminar="${r.id}">🗑️</button>
+                            ${puedeEliminar ? `<button class="btn btn-sm btn-limpiar" data-eliminar="${r.id}">🗑️</button>` : '<span style="font-size:0.7rem;color:#8a8aaa;">Solo lectura</span>'}
                         </div>
                     </td>
                 </tr>`;
@@ -3054,7 +3151,6 @@
             html += `</tbody></table>`;
             container.innerHTML = html;
 
-            // Eliminar registros
             container.querySelectorAll('[data-eliminar]').forEach(btn => {
                 btn.addEventListener('click', async function() {
                     const id = this.dataset.eliminar;
@@ -3071,7 +3167,6 @@
                 });
             });
 
-            // Dashboard (últimos 5)
             let dashHtml = `<table><thead><tr><th>Fecha</th><th>Trabajador</th><th>Total</th><th>Monto</th></tr></thead><tbody>`;
             ordenados.slice(0, 5).forEach(r => {
                 dashHtml += `<tr>
@@ -3086,7 +3181,7 @@
         }
 
         // ======================================================================
-        // 15. DASHBOARD
+        // 12. DASHBOARD (filtrado por usuario)
         // ======================================================================
         function actualizarDashboard() {
             const apertura = quincenaActual.apertura;
@@ -3104,17 +3199,20 @@
                 document.getElementById('statDiasQuincena').textContent = '0/0';
             }
 
+            // Trabajadores activos (según permisos)
             const hace7dias = new Date(hoy);
             hace7dias.setDate(hace7dias.getDate() - 7);
             const limite7dias = hace7dias.toISOString().split('T')[0];
             let activos = 0;
-            allTrabajadores.forEach(t => {
+            const trabajadoresFiltrados = esAdmin ? allTrabajadores : allTrabajadores.filter(t => t.uid === currentUser.uid);
+            trabajadoresFiltrados.forEach(t => {
                 const regs = allRegistros.filter(r => r.trabajadorId === t.id && r.fecha >= limite7dias && r.fecha <=
                     hoyStr);
                 if (regs.length > 0) activos++;
             });
             document.getElementById('statTrabajadoresActivos').textContent = activos;
 
+            // Registros pendientes (solo del usuario si no es admin)
             let pendientes = 0;
             if (apertura && cierre) {
                 const inicio = new Date(apertura + 'T00:00:00');
@@ -3123,7 +3221,7 @@
                 const diasTranscurridos = Math.min(Math.max(0, Math.ceil((hoy - inicio) / (1000 * 60 * 60 * 24)) + 1),
                 totalDias);
                 const diasHastaHoy = Math.min(diasTranscurridos, totalDias);
-                allTrabajadores.forEach(t => {
+                trabajadoresFiltrados.forEach(t => {
                     let diasLaborados = 0;
                     let diasLaborables = 0;
                     for (let d = 0; d < diasHastaHoy; d++) {
@@ -3228,19 +3326,22 @@
         }
 
         // ======================================================================
-        // 16. FERIADOS
+        // 13. FERIADOS
         // ======================================================================
         function renderizarFeriados() {
             const container = document.getElementById('listaFeriadosCalendario');
             const hoy = new Date();
             hoy.setHours(0, 0, 0, 0);
-            let html = '';
-            const feriados = allFeriados.length > 0 ? allFeriados : [];
-            if (feriados.length === 0) {
+
+            const feriadosOrdenados = [...allFeriados].sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+            if (feriadosOrdenados.length === 0) {
                 container.innerHTML = '<p style="color:#8a8aaa;">No hay feriados registrados.</p>';
                 return;
             }
-            feriados.forEach(f => {
+
+            let html = '';
+            feriadosOrdenados.forEach(f => {
                 const fechaObj = new Date(f.fecha + 'T00:00:00');
                 const diff = Math.ceil((fechaObj - hoy) / (1000 * 60 * 60 * 24));
                 const esPasado = diff < 0;
@@ -3263,8 +3364,8 @@
             const container = document.getElementById('proximosFeriadosDashboard');
             const hoy = new Date();
             hoy.setHours(0, 0, 0, 0);
-            const feriados = allFeriados.length > 0 ? allFeriados : [];
-            const proximos = feriados
+
+            const proximos = [...allFeriados]
                 .filter(f => new Date(f.fecha + 'T00:00:00') >= hoy)
                 .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
                 .slice(0, 3);
@@ -3290,7 +3391,7 @@
         }
 
         // ======================================================================
-        // 17. FINANZAS
+        // 14. FINANZAS (con permisos)
         // ======================================================================
         function actualizarFinanzas() {
             const codigo = finanzasTrabajadorSeleccionado;
@@ -3307,6 +3408,19 @@
             }
             const t = obtenerTrabajador(codigo);
             if (!t) return;
+
+            // Verificar permisos: si no es admin, solo ver sus propias finanzas
+            if (!esAdmin && t.uid !== currentUser.uid) {
+                document.getElementById('resumenSalarioBase').innerHTML =
+                    `<p style="color:#8a8aaa;">No tienes permiso para ver estas finanzas.</p>`;
+                document.getElementById('resumenHorasExtras').innerHTML =
+                    `<p style="color:#8a8aaa;">No tienes permiso para ver estas finanzas.</p>`;
+                document.getElementById('resumenDeduccionesLey').innerHTML =
+                    `<p style="color:#8a8aaa;">No tienes permiso para ver estas finanzas.</p>`;
+                document.getElementById('resumenSalarioNeto').innerHTML =
+                    `<p style="color:#8a8aaa;">No tienes permiso para ver estas finanzas.</p>`;
+                return;
+            }
 
             const base = t.salarioBase || 0;
             const diario = base / 30;
@@ -3348,18 +3462,34 @@
 
             document.getElementById('resumenDeduccionesLey').innerHTML = `
                 <div class="fila"><span class="label">ISSS (3%)</span><span class="valor negativo">-$${isss.toFixed(2)}</span><span class="explicacion" onclick="toggleExplicacion(this)">ⓘ</span></div>
-                <div class="explicacion-box"><strong>¿Qué es?</strong> Aporte al Seguro Social para salud y riesgos profesionales.<br><strong>Cálculo:</strong> 3% del salario bruto (tope $30.00).<br><strong>Ejemplo con $408.80:</strong> $408.80 × 3% = <strong>$12.26</strong><br><span class="legal">Art. 1 de la Ley del ISSS</span></div>
+                <div class="explicacion-box">
+                    <strong>¿Qué es?</strong> Aporte al Seguro Social para salud y riesgos profesionales.<br>
+                    <strong>Cálculo:</strong> 3% del salario bruto (tope mensual $30.00).<br>
+                    <strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> $204.40 × 3% = <strong>$6.13</strong><br>
+                    <span class="legal">Art. 1 de la Ley del ISSS</span>
+                </div>
                 <div class="fila"><span class="label">AFP (7.25%)</span><span class="valor negativo">-$${afp.toFixed(2)}</span><span class="explicacion" onclick="toggleExplicacion(this)">ⓘ</span></div>
-                <div class="explicacion-box"><strong>¿Qué es?</strong> Aporte para el fondo de pensiones.<br><strong>Cálculo:</strong> 7.25% del salario bruto (sin tope).<br><strong>Ejemplo con $408.80:</strong> $408.80 × 7.25% = <strong>$29.64</strong><br><span class="legal">Art. 12 de la Ley del Sistema de Ahorro para Pensiones</span></div>
+                <div class="explicacion-box">
+                    <strong>¿Qué es?</strong> Aporte para el fondo de pensiones.<br>
+                    <strong>Cálculo:</strong> 7.25% del salario bruto (sin tope).<br>
+                    <strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> $204.40 × 7.25% = <strong>$14.82</strong><br>
+                    <span class="legal">Art. 12 de la Ley del Sistema de Ahorro para Pensiones</span>
+                </div>
                 <div class="fila"><span class="label">ISR (Impuesto sobre la Renta)</span><span class="valor negativo">-$${isr.toFixed(2)}</span><span class="explicacion" onclick="toggleExplicacion(this)">ⓘ</span></div>
-                <div class="explicacion-box"><strong>¿Qué es?</strong> Impuesto que se paga al Estado según tus ingresos.<br><strong>Base exenta:</strong> $550.00 mensuales (Decreto No. 10, abril 2025).<br><strong>Cálculo:</strong> Tabla progresiva sobre salario después de ISSS y AFP.<br><strong>Ejemplo con $408.80:</strong> Base: $408.80 - $12.26 - $29.64 = $366.90 → exento → <strong>$0.00</strong><br><span class="legal">Art. 26 Ley de Impuesto sobre la Renta</span></div>
+                <div class="explicacion-box">
+                    <strong>¿Qué es?</strong> Impuesto que se paga al Estado según tus ingresos.<br>
+                    <strong>Base exenta mensual:</strong> $550.00 (Decreto No. 10, abril 2025).<br>
+                    <strong>Cálculo:</strong> Tabla progresiva sobre salario después de ISSS y AFP.<br>
+                    <strong>Ejemplo quincenal (salario mensual $408.80 → quincenal $204.40):</strong> Base: $204.40 - $6.13 - $14.82 = $183.45 → exento → <strong>$0.00</strong><br>
+                    <span class="legal">Art. 26 Ley de Impuesto sobre la Renta</span>
+                </div>
                 <div class="fila" style="border-bottom:2px solid #e0e2ea; margin-top:6px;">
-                    <span class="label">Total deducciones de ley</span>
+                    <span class="label">Total deducciones de ley (mensual)</span>
                     <span class="valor negativo">-$${totalLey.toFixed(2)}</span>
                 </div>
             `;
 
-            // Cafetería (desde localStorage para compatibilidad)
+            // Cafetería
             let diasComida = 0;
             try {
                 const cafeteriaData = localStorage.getItem('cafeteria');
@@ -3373,7 +3503,7 @@
             document.getElementById('cafeteriaDias').value = diasComida;
             document.getElementById('cafeteriaTotal').textContent = `$${montoCafeteria.toFixed(2)}`;
 
-            // Préstamos (desde localStorage para compatibilidad)
+            // Préstamos
             let cuotaPrestamos = 0;
             let prestamosHtml = '';
             try {
@@ -3406,7 +3536,6 @@
                 prestamosHtml = `<p style="color:#8a8aaa;">No hay préstamos activos.</p>`;
             }
             document.getElementById('listaPrestamos').innerHTML = prestamosHtml;
-            // Eventos de préstamos (se manejan con delegación)
             document.getElementById('listaPrestamos').querySelectorAll('[data-pagar-prestamo]').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const idx = parseInt(this.dataset.pagarPrestamo);
@@ -3443,7 +3572,7 @@
         }
 
         // ======================================================================
-        // 18. PRÉSTAMOS (localStorage compat)
+        // 15. PRÉSTAMOS (localStorage)
         // ======================================================================
         function agregarPrestamo() {
             const codigo = finanzasTrabajadorSeleccionado;
@@ -3520,7 +3649,7 @@
         document.getElementById('btnAgregarPrestamo').addEventListener('click', agregarPrestamo);
 
         // ======================================================================
-        // 19. CAFETERÍA
+        // 16. CAFETERÍA
         // ======================================================================
         document.getElementById('btnGuardarCafeteria').addEventListener('click', function() {
             const codigo = finanzasTrabajadorSeleccionado;
@@ -3544,7 +3673,7 @@
         });
 
         // ======================================================================
-        // 20. BOLETA
+        // 17. BOLETA
         // ======================================================================
         document.getElementById('btnCompararBoleta').addEventListener('click', actualizarComparacion);
 
@@ -3564,7 +3693,9 @@
             let diurnasReg = 0,
                 nocturnasReg = 0,
                 totalReg = 0;
-            allRegistros.forEach(r => {
+            // Solo comparar registros del usuario si no es admin
+            const registrosFiltrados = esAdmin ? allRegistros : allRegistros.filter(r => r.creadoPor === currentUser.uid);
+            registrosFiltrados.forEach(r => {
                 if (r.fecha >= apertura && r.fecha <= cierre) {
                     diurnasReg += r.diurnas || 0;
                     nocturnasReg += r.nocturnas || 0;
@@ -3591,7 +3722,7 @@
         }
 
         // ======================================================================
-        // 21. REPORTES
+        // 18. REPORTES
         // ======================================================================
         function cargarReportes() {
             const apertura = quincenaActual.apertura;
@@ -3608,7 +3739,8 @@
                     `<p style="color:#8a8aaa;">Seleccione un rango de fechas.</p>`;
                 return;
             }
-            const registros = allRegistros.filter(r => r.fecha >= desde && r.fecha <= hasta);
+            const registrosFiltrados = esAdmin ? allRegistros : allRegistros.filter(r => r.creadoPor === currentUser.uid);
+            const registros = registrosFiltrados.filter(r => r.fecha >= desde && r.fecha <= hasta);
             if (registros.length === 0) {
                 document.getElementById('reportePreview').innerHTML =
                     `<p style="color:#8a8aaa;">No hay registros en el rango seleccionado.</p>`;
@@ -3709,7 +3841,7 @@
         document.getElementById('reporteHasta').addEventListener('change', generarReporte);
 
         // ======================================================================
-        // 22. BACKUPS
+        // 19. BACKUPS
         // ======================================================================
         function renderizarListaBackups() {
             const container = document.getElementById('listaBackups');
@@ -3741,10 +3873,7 @@
                     try { backups = JSON.parse(localStorage.getItem('backups')); } catch (e) {}
                     if (backups && backups[idx]) {
                         const backup = backups[idx];
-                        // Restaurar datos
                         if (backup.datos) {
-                            // Aquí se restaurarían los datos, pero como ahora usamos Firebase,
-                            // esto es solo para compatibilidad con localStorage
                             mostrarNotificacion('Backup restaurado (datos en localStorage).', 'success');
                         }
                     }
@@ -3803,7 +3932,6 @@
                         mostrarNotificacion('Archivo de backup inválido.', 'error');
                         return;
                     }
-                    // Mostrar notificación
                     mostrarNotificacion('Backup cargado (los datos se restauraron en localStorage).', 'success');
                 } catch (err) {
                     mostrarNotificacion('Error al leer el backup.', 'error');
@@ -3822,7 +3950,8 @@
             let texto = `RESUMEN DE HORAS EXTRAS\n`;
             texto += `Quincena: ${apertura} al ${cierre}\n`;
             texto += `Fecha de exportación: ${new Date().toLocaleString()}\n\n`;
-            allTrabajadores.forEach(t => {
+            const trabajadoresFiltrados = esAdmin ? allTrabajadores : allTrabajadores.filter(t => t.uid === currentUser.uid);
+            trabajadoresFiltrados.forEach(t => {
                 const regs = allRegistros.filter(r => r.trabajadorId === t.id && r.fecha >= apertura && r.fecha <=
                     cierre);
                 let diurnas = 0,
@@ -3878,7 +4007,8 @@
             let y = 110;
             ctx.textAlign = 'left';
             ctx.font = '15px sans-serif';
-            allTrabajadores.forEach(t => {
+            const trabajadoresFiltrados = esAdmin ? allTrabajadores : allTrabajadores.filter(t => t.uid === currentUser.uid);
+            trabajadoresFiltrados.forEach(t => {
                 const regs = allRegistros.filter(r => r.trabajadorId === t.id && r.fecha >= apertura && r.fecha <=
                     cierre);
                 let diurnas = 0,
@@ -3915,7 +4045,7 @@
         });
 
         // ======================================================================
-        // 23. CONFIGURACIÓN
+        // 20. CONFIGURACIÓN
         // ======================================================================
         function cargarConfiguracion() {
             document.getElementById('configTarifaDiurna').value = TARIFA_DIURNA;
@@ -3925,7 +4055,8 @@
         function cargarSalariosConfig() {
             const container = document.getElementById('configSalarios');
             let html = '';
-            allTrabajadores.forEach(t => {
+            const trabajadoresMostrar = esAdmin ? allTrabajadores : allTrabajadores.filter(t => t.uid === currentUser.uid);
+            trabajadoresMostrar.forEach(t => {
                 html += `<div class="config-item">
                     <span class="label">${t.nombre} (${t.codigo})</span>
                     <input type="number" id="configSalario_${t.codigo}" step="0.01" value="${t.salarioBase || 0}" style="max-width:150px;">
@@ -3940,6 +4071,11 @@
                     const val = parseFloat(input.value) || 0;
                     const t = allTrabajadores.find(t => t.codigo === codigo);
                     if (t) {
+                        // Verificar permisos
+                        if (!esAdmin && t.uid !== currentUser.uid) {
+                            mostrarNotificacion('No tienes permiso para modificar este salario.', 'error');
+                            return;
+                        }
                         try {
                             await db.collection('trabajadores').doc(t.id).update({ salarioBase: val });
                             t.salarioBase = val;
@@ -3956,7 +4092,8 @@
         function cargarFechasIngresoConfig() {
             const container = document.getElementById('configFechasIngreso');
             let html = '';
-            allTrabajadores.forEach(t => {
+            const trabajadoresMostrar = esAdmin ? allTrabajadores : allTrabajadores.filter(t => t.uid === currentUser.uid);
+            trabajadoresMostrar.forEach(t => {
                 html += `<div class="config-item">
                     <span class="label">${t.nombre} (${t.codigo})</span>
                     <input type="date" id="configFechaIngreso_${t.codigo}" value="${t.fechaIngreso || ''}" style="max-width:180px;">
@@ -3971,6 +4108,10 @@
                     const val = input.value;
                     const t = allTrabajadores.find(t => t.codigo === codigo);
                     if (t) {
+                        if (!esAdmin && t.uid !== currentUser.uid) {
+                            mostrarNotificacion('No tienes permiso para modificar esta fecha.', 'error');
+                            return;
+                        }
                         try {
                             await db.collection('trabajadores').doc(t.id).update({ fechaIngreso: val });
                             t.fechaIngreso = val;
@@ -3984,6 +4125,7 @@
         }
 
         document.getElementById('btnGuardarTarifaDiurna').addEventListener('click', async function() {
+            if (!esAdmin) { mostrarNotificacion('Solo administradores pueden modificar tarifas.', 'error'); return; }
             const val = parseFloat(document.getElementById('configTarifaDiurna').value);
             if (isNaN(val) || val < 0) { mostrarNotificacion('Ingrese un valor válido.', 'error'); return; }
             TARIFA_DIURNA = val;
@@ -3996,6 +4138,7 @@
         });
 
         document.getElementById('btnGuardarTarifaNocturna').addEventListener('click', async function() {
+            if (!esAdmin) { mostrarNotificacion('Solo administradores pueden modificar tarifas.', 'error'); return; }
             const val = parseFloat(document.getElementById('configTarifaNocturna').value);
             if (isNaN(val) || val < 0) { mostrarNotificacion('Ingrese un valor válido.', 'error'); return; }
             TARIFA_NOCTURNA = val;
@@ -4008,7 +4151,7 @@
         });
 
         document.getElementById('btnGuardarHorarioBase').addEventListener('click', function() {
-            // Guardar en localStorage para compatibilidad (no en Firebase)
+            if (!esAdmin) { mostrarNotificacion('Solo administradores pueden modificar el horario.', 'error'); return; }
             const lunJue = document.getElementById('configBaseLunJue').value;
             const vie = document.getElementById('configBaseVie').value;
             localStorage.setItem('horarioBase', JSON.stringify({ lunJue, vie }));
@@ -4021,6 +4164,10 @@
             const val = parseFloat(document.getElementById('finanzasSalarioBase').value) || 0;
             const t = allTrabajadores.find(t => t.codigo === codigo);
             if (t) {
+                if (!esAdmin && t.uid !== currentUser.uid) {
+                    mostrarNotificacion('No tienes permiso para modificar este salario.', 'error');
+                    return;
+                }
                 try {
                     await db.collection('trabajadores').doc(t.id).update({ salarioBase: val });
                     t.salarioBase = val;
@@ -4033,9 +4180,10 @@
         });
 
         // ======================================================================
-        // 24. QUINCENA (guardar en Firebase)
+        // 21. QUINCENA
         // ======================================================================
         document.getElementById('btnGuardarQuincena')?.addEventListener('click', async function() {
+            if (!esAdmin) { mostrarNotificacion('Solo administradores pueden configurar la quincena.', 'error'); return; }
             const apertura = document.getElementById('quincenaApertura')?.value;
             const cierre = document.getElementById('quincenaCierre')?.value;
             if (!apertura || !cierre) {
@@ -4058,7 +4206,7 @@
         });
 
         // ======================================================================
-        // 25. NOTIFICACIONES
+        // 22. NOTIFICACIONES
         // ======================================================================
         function mostrarNotificacion(mensaje, tipo) {
             const div = document.getElementById('notificaciones');
@@ -4070,7 +4218,7 @@
         }
 
         // ======================================================================
-        // 26. MODOS
+        // 23. MODOS
         // ======================================================================
         function aplicarModo(modo) {
             document.body.className = `modo-${modo}`;
@@ -4087,14 +4235,14 @@
         });
 
         // ======================================================================
-        // 27. CIERRE DE SESIÓN
+        // 24. CIERRE DE SESIÓN
         // ======================================================================
         document.getElementById('btnLogout').addEventListener('click', function() {
             auth.signOut();
         });
 
         // ======================================================================
-        // 28. EVENTOS DE FORMULARIO DE REGISTRO
+        // 25. EVENTOS DE REGISTRO
         // ======================================================================
         function configurarEventos() {
             document.querySelectorAll('.hora-selector button[data-ajuste]').forEach(btn => {
@@ -4129,17 +4277,11 @@
         }
 
         // ======================================================================
-        // 29. INICIO (se dispara con onAuthStateChanged)
+        // 26. INICIO
         // ======================================================================
-        // La función initApp se llama desde onAuthStateChanged después de cargar los datos.
-
-        // ======================================================================
-        // 30. CARGA INICIAL DE FERIADOS (si no existen)
-        // ======================================================================
-        // Ya se maneja en cargarDatosIniciales()
-
-        console.log('🚀 App con Firebase iniciada.');
-        console.log('🔐 Usuario autenticado:', currentUser ? currentUser.email : 'No logueado');
+        console.log('🚀 App con Firebase (roles y permisos) iniciada.');
+        console.log('👤 Usuario:', currentUserData ? currentUserData.email : 'No logueado');
+        console.log('🔑 Rol:', esAdmin ? 'admin' : 'trabajador');
     </script>
 </body>
 </html>
