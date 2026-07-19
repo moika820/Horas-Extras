@@ -69,7 +69,7 @@
             color: #1a1a2e;
             padding: 0 4px;
             line-height: 1;
-            display: none;
+            display: block;
         }
         body.modo-noche .header-bar .hamburger {
             color: #f0f0f0;
@@ -84,6 +84,8 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex: 1;
+            margin-left: 12px;
         }
         .header-bar .fecha-actual {
             font-size: 0.85rem;
@@ -110,7 +112,7 @@
             color: #2563eb;
         }
 
-        /* ----- SIDEBAR (overlay) ----- */
+        /* ----- SIDEBAR (siempre presente, se abre/cierra) ----- */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -129,17 +131,18 @@
         .sidebar {
             position: fixed;
             top: 0;
-            left: -280px;
+            left: 0;
             width: 280px;
             height: 100%;
             background: #ffffff;
             box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
-            transition: left 0.3s ease;
+            transition: left 0.3s ease, transform 0.3s ease;
             z-index: 1000;
             padding: 20px 0;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+            left: -280px;
         }
         body.modo-noche .sidebar {
             background: #1a1a1a;
@@ -149,6 +152,16 @@
         }
         .sidebar.abierto {
             left: 0;
+        }
+
+        /* En pantallas grandes, el menú está abierto por defecto */
+        @media (min-width: 768px) {
+            .sidebar {
+                left: 0;
+            }
+            .sidebar.cerrado {
+                left: -280px;
+            }
         }
 
         .sidebar .logo {
@@ -301,8 +314,17 @@
         .main-content {
             flex: 1;
             padding: 16px 20px;
-            transition: background 0.3s ease;
+            transition: background 0.3s ease, margin-left 0.3s ease;
             max-width: 100%;
+        }
+        @media (min-width: 768px) {
+            .main-content {
+                margin-left: 280px;
+                padding: 24px 32px;
+            }
+            .main-content.menu-cerrado {
+                margin-left: 0;
+            }
         }
 
         .tab-panel {
@@ -476,16 +498,18 @@
             transform: scale(0.97);
         }
 
-        /* ----- HORA SELECTOR (4 botones) ----- */
-        .hora-selector {
+        /* ----- HORA SELECTOR (4 botones en línea) ----- */
+        .hora-row {
             display: flex;
+            flex-direction: row;
             align-items: center;
             gap: 8px;
+            justify-content: center;
             flex-wrap: wrap;
         }
-        .hora-selector .hora-input {
-            flex: 1;
-            min-width: 120px;
+        .hora-row .hora-input {
+            flex: 1 1 140px;
+            min-width: 100px;
             text-align: center;
             font-weight: 600;
             letter-spacing: 0.3px;
@@ -499,21 +523,21 @@
             transition: all 0.25s ease;
             min-height: 48px;
         }
-        body.modo-noche .hora-selector .hora-input {
+        body.modo-noche .hora-row .hora-input {
             background: #121212;
             border-color: #2a2a2a;
             color: #f0f0f0;
         }
-        body.modo-oficina .hora-selector .hora-input {
+        body.modo-oficina .hora-row .hora-input {
             background: #fafaff;
             border-color: #cbd5e1;
             color: #1e293b;
         }
-        .hora-selector .hora-input:focus {
+        .hora-row .hora-input:focus {
             border-color: #0066cc;
             box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.08);
         }
-        .hora-selector .btn-hora {
+        .hora-row .btn-hora {
             background: #f0f2f5;
             border: none;
             width: 48px;
@@ -528,38 +552,47 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+            touch-action: manipulation;
         }
-        body.modo-noche .hora-selector .btn-hora {
+        body.modo-noche .hora-row .btn-hora {
             background: #2a2a2a;
             color: #f0f0f0;
         }
-        body.modo-oficina .hora-selector .btn-hora {
+        body.modo-oficina .hora-row .btn-hora {
             background: #cbd5e1;
             color: #1e293b;
         }
-        .hora-selector .btn-hora:hover {
+        .hora-row .btn-hora:hover {
             background: #e0e2ea;
             transform: scale(1.06);
         }
-        body.modo-noche .hora-selector .btn-hora:hover {
+        body.modo-noche .hora-row .btn-hora:hover {
             background: #3a3a3a;
         }
-        body.modo-oficina .hora-selector .btn-hora:hover {
+        body.modo-oficina .hora-row .btn-hora:hover {
             background: #b0b8c4;
         }
 
-        .hora-selector .etiqueta-hora {
-            font-weight: 600;
-            font-size: 0.8rem;
-            color: #6b6b8a;
-            width: 60px;
-            flex-shrink: 0;
+        .hora-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
         }
-        body.modo-noche .hora-selector .etiqueta-hora {
-            color: #8a8aaa;
-        }
-        body.modo-oficina .hora-selector .etiqueta-hora {
-            color: #475569;
+        @media (max-width: 600px) {
+            .hora-container {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            .hora-row .btn-hora {
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+            .hora-row .hora-input {
+                min-width: 80px;
+                font-size: 0.9rem;
+                padding: 10px 6px;
+            }
         }
 
         /* ----- TRABAJADORES (tarjetas) ----- */
@@ -1398,10 +1431,109 @@
             color: #2563eb;
         }
 
+        /* ----- GESTIÓN DE TRABAJADORES ----- */
+        .trabajador-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 16px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        body.modo-noche .trabajador-item {
+            border-color: #2a2a2a;
+        }
+        body.modo-oficina .trabajador-item {
+            border-color: #cbd5e1;
+        }
+        .trabajador-item .info {
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 16px;
+            font-size: 0.9rem;
+        }
+        .trabajador-item .info .codigo {
+            font-weight: 700;
+            color: #0066cc;
+        }
+        body.modo-noche .trabajador-item .info .codigo {
+            color: #4a8aff;
+        }
+        body.modo-oficina .trabajador-item .info .codigo {
+            color: #2563eb;
+        }
+        .trabajador-item .info .nombre {
+            font-weight: 600;
+        }
+        .trabajador-item .info .cargo {
+            color: #6b6b8a;
+        }
+        body.modo-noche .trabajador-item .info .cargo {
+            color: #8a8aaa;
+        }
+        body.modo-oficina .trabajador-item .info .cargo {
+            color: #475569;
+        }
+        .trabajador-item .info .salario {
+            font-weight: 600;
+            color: #00a86b;
+        }
+        body.modo-noche .trabajador-item .info .salario {
+            color: #4ade80;
+        }
+        body.modo-oficina .trabajador-item .info .salario {
+            color: #16a34a;
+        }
+        .trabajador-item .info .fechaIngreso {
+            color: #8a8aaa;
+            font-size: 0.8rem;
+        }
+        body.modo-noche .trabajador-item .info .fechaIngreso {
+            color: #6a6a8a;
+        }
+
+        .form-nuevo-trabajador {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 16px;
+            border-radius: 18px;
+            border: 1px solid #eef2f6;
+            margin-bottom: 16px;
+        }
+        body.modo-noche .form-nuevo-trabajador {
+            background: #121212;
+            border-color: #2a2a2a;
+        }
+        body.modo-oficina .form-nuevo-trabajador {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .form-nuevo-trabajador .campo {
+            margin-bottom: 0;
+        }
+        .form-nuevo-trabajador .btn {
+            grid-column: 1 / -1;
+            justify-self: center;
+        }
+        @media (max-width: 600px) {
+            .form-nuevo-trabajador {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ----- RESPONSIVE ----- */
-        @media (max-width: 768px) {
-            .header-bar .hamburger {
-                display: block;
+        @media (max-width: 767px) {
+            .main-content {
+                padding: 12px 12px 80px 12px;
+                margin-left: 0 !important;
+            }
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
             }
             .header-bar .fecha-actual {
                 display: none;
@@ -1409,45 +1541,17 @@
             .header-bar .reloj {
                 font-size: 0.85rem;
             }
-            .main-content {
-                padding: 12px 12px 80px 12px;
-            }
-            .grid-2,
-            .grid-3,
-            .grid-4 {
-                grid-template-columns: 1fr;
-            }
-            .hora-selector .etiqueta-hora {
-                width: 50px;
-                font-size: 0.7rem;
-            }
-            .hora-selector .btn-hora {
-                width: 44px;
-                height: 44px;
-                font-size: 1.2rem;
-            }
-            .worker-card .stats {
-                grid-template-columns: 1fr 1fr;
-            }
-            .registro-dia {
-                grid-template-columns: 1fr 1fr;
-                font-size: 0.8rem;
-            }
-            .registro-dia .fecha {
-                grid-column: 1 / -1;
-            }
-            .config-item .label {
-                min-width: 100px;
-            }
-            .config-item input,
-            .config-item select {
-                min-width: 80px;
-            }
             #notificaciones {
                 top: 60px;
                 right: 8px;
                 left: 8px;
                 max-width: 100%;
+            }
+            .sidebar {
+                left: -280px;
+            }
+            .sidebar.abierto {
+                left: 0;
             }
         }
 
@@ -1471,11 +1575,6 @@
             }
             .worker-card .header .nombre {
                 font-size: 1rem;
-            }
-            .hora-selector .hora-input {
-                min-width: 80px;
-                font-size: 0.9rem;
-                padding: 10px 6px;
             }
         }
 
@@ -1501,35 +1600,6 @@
         .gap-12 {
             gap: 12px;
         }
-
-        /* ----- SCROLLBAR ----- */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f0f2f5;
-            border-radius: 8px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c0c4d0;
-            border-radius: 8px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #a0a4b0;
-        }
-        body.modo-noche ::-webkit-scrollbar-track {
-            background: #1a1a1a;
-        }
-        body.modo-noche ::-webkit-scrollbar-thumb {
-            background: #3a3a4a;
-        }
-        body.modo-oficina ::-webkit-scrollbar-track {
-            background: #e2e8f0;
-        }
-        body.modo-oficina ::-webkit-scrollbar-thumb {
-            background: #b0b8c4;
-        }
     </style>
 </head>
 <body>
@@ -1546,7 +1616,7 @@
         </div>
     </header>
 
-    <!-- ===== SIDEBAR OVERLAY ===== -->
+    <!-- ===== SIDEBAR OVERLAY (solo móvil) ===== -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <!-- ===== SIDEBAR ===== -->
@@ -1574,12 +1644,12 @@
     </aside>
 
     <!-- ===== MAIN CONTENT ===== -->
-    <main class="main-content">
+    <main class="main-content" id="mainContent">
 
         <!-- Notificaciones -->
         <div id="notificaciones"></div>
 
-        <!-- ==================== RESUMEN (antes Dashboard) ==================== -->
+        <!-- ==================== RESUMEN ==================== -->
         <div class="tab-panel activo" id="panel-resumen">
             <div class="grid-4" id="statsContainer">
                 <div class="stat-card">
@@ -1636,7 +1706,6 @@
                 </div>
             </div>
 
-            <!-- Resumen de horas por trabajador (tarjetas) -->
             <div class="tarjeta">
                 <div style="font-weight:700; font-size:1.1rem; margin-bottom:16px;">Resumen de horas por trabajador</div>
                 <div id="resumenTrabajadores">
@@ -1663,10 +1732,11 @@
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                <!-- HORAS: ENTRADA Y SALIDA EN UNA FILA HORIZONTAL -->
+                <div class="hora-container">
                     <div class="campo">
                         <label>⏰ Hora de entrada</label>
-                        <div class="hora-selector">
+                        <div class="hora-row">
                             <button class="btn-hora" data-ajuste="-30" data-target="entrada">−</button>
                             <input type="text" class="hora-input" id="horaEntrada" placeholder="hh:mm AM/PM" value="08:00 AM">
                             <button class="btn-hora" data-ajuste="30" data-target="entrada">+</button>
@@ -1674,7 +1744,7 @@
                     </div>
                     <div class="campo">
                         <label>⏰ Hora de salida</label>
-                        <div class="hora-selector">
+                        <div class="hora-row">
                             <button class="btn-hora" data-ajuste="-30" data-target="salida">−</button>
                             <input type="text" class="hora-input" id="horaSalida" placeholder="hh:mm AM/PM" value="05:00 PM">
                             <button class="btn-hora" data-ajuste="30" data-target="salida">+</button>
@@ -2037,6 +2107,47 @@
                     <!-- se genera con JS -->
                 </div>
             </div>
+
+            <!-- ===== NUEVA SECCIÓN: GESTIÓN DE TRABAJADORES ===== -->
+            <div class="tarjeta">
+                <div style="font-weight:700; font-size:1.1rem; margin-bottom:16px;">👥 Gestión de trabajadores</div>
+                
+                <div style="font-weight:600; font-size:0.95rem; margin-bottom:12px; color:#6b6b8a;">
+                    Agregar nuevo trabajador
+                </div>
+                <div class="form-nuevo-trabajador" id="formNuevoTrabajador">
+                    <div class="campo">
+                        <label>Código *</label>
+                        <input type="text" id="nuevoCodigo" placeholder="Ej: 4050" required>
+                    </div>
+                    <div class="campo">
+                        <label>Nombre completo *</label>
+                        <input type="text" id="nuevoNombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="campo">
+                        <label>Cargo *</label>
+                        <input type="text" id="nuevoCargo" placeholder="Ej: Plaquero" required>
+                    </div>
+                    <div class="campo">
+                        <label>Salario base ($)</label>
+                        <input type="number" id="nuevoSalario" step="0.01" value="408.80">
+                    </div>
+                    <div class="campo">
+                        <label>Fecha de ingreso</label>
+                        <input type="date" id="nuevoFechaIngreso">
+                    </div>
+                    <div class="campo" style="grid-column:1/-1; display:flex; gap:12px; flex-wrap:wrap;">
+                        <button class="btn btn-guardar" id="btnAgregarTrabajador">➕ Agregar trabajador</button>
+                    </div>
+                </div>
+
+                <div style="font-weight:600; font-size:0.95rem; margin:16px 0 8px 0; color:#6b6b8a;">
+                    Lista de trabajadores
+                </div>
+                <div id="listaTrabajadoresConfig">
+                    <!-- se genera con JS -->
+                </div>
+            </div>
         </div>
 
         <!-- ==================== BACKUPS ==================== -->
@@ -2065,11 +2176,11 @@
 
     <script>
         // ======================================================================
-        //  SISTEMA COMPLETO - VERSIÓN FINAL CON TODAS LAS MEJORAS
+        //  SISTEMA COMPLETO - VERSIÓN FINAL CON MENÚ SIEMPRE VISIBLE Y GESTIÓN DE TRABAJADORES
         // ======================================================================
 
         // -------- DATOS INICIALES --------
-        const TRABAJADORES = [
+        const TRABAJADORES_INICIALES = [
             { codigo: '3974', nombre: 'José Israel Fernández Juárez', cargo: 'Plaquero', salarioBase: 408.80,
                 fechaIngreso: '2025-11-01' },
             { codigo: '20', nombre: 'Julio César Alvarenga Valladares', cargo: 'Supervisor de Área de Placas',
@@ -2097,7 +2208,7 @@
 
         // -------- ESTADO GLOBAL --------
         let estado = {
-            trabajadores: TRABAJADORES,
+            trabajadores: [],
             registros: [],
             quincenas: {},
             config: {
@@ -2117,6 +2228,23 @@
             prestamos: {}
         };
 
+        // Inicializar trabajadores desde localStorage o usar los iniciales
+        function cargarTrabajadores() {
+            const saved = localStorage.getItem('trabajadoresData');
+            if (saved) {
+                try {
+                    estado.trabajadores = JSON.parse(saved);
+                    return;
+                } catch (e) {}
+            }
+            estado.trabajadores = JSON.parse(JSON.stringify(TRABAJADORES_INICIALES));
+            guardarTrabajadores();
+        }
+
+        function guardarTrabajadores() {
+            localStorage.setItem('trabajadoresData', JSON.stringify(estado.trabajadores));
+        }
+
         // -------- REFERENCIAS DOM --------
         const $ = id => document.getElementById(id);
         const $$ = sel => document.querySelectorAll(sel);
@@ -2126,11 +2254,11 @@
         const hamburgerBtn = $('hamburgerBtn');
         const sidebarOverlay = $('sidebarOverlay');
         const sidebar = $('sidebar');
+        const mainContent = $('mainContent');
         const tituloSeccion = $('tituloSeccion');
         const fechaActualHeader = $('fechaActualHeader');
         const relojHeader = $('relojHeader');
 
-        // Registro
         const selectorTrabajador = $('selectorTrabajador');
         const fechaTurno = $('fechaTurno');
         const fechaConDia = $('fechaConDia');
@@ -2144,7 +2272,6 @@
         const btnCopiarTurno = $('btnCopiarTurno');
         const contenidoDetalles = $('contenidoDetalles');
 
-        // Resumen
         const statDiasQuincena = $('statDiasQuincena');
         const statTrabajadoresActivos = $('statTrabajadoresActivos');
         const statRegistrosPendientes = $('statRegistrosPendientes');
@@ -2154,10 +2281,8 @@
         const ultimosRegistrosResumen = $('ultimosRegistrosResumen');
         const resumenTrabajadores = $('resumenTrabajadores');
 
-        // Horas
         const listaRegistrosHoras = $('listaRegistrosHoras');
 
-        // Finanzas
         const selectorFinanzasTrabajador = $('selectorFinanzasTrabajador');
         const finanzasSalarioBase = $('finanzasSalarioBase');
         const btnGuardarSalarioBase = $('btnGuardarSalarioBase');
@@ -2173,10 +2298,8 @@
         const btnAgregarPrestamo = $('btnAgregarPrestamo');
         const listaPrestamos = $('listaPrestamos');
 
-        // Calendario
         const listaFeriadosCalendario = $('listaFeriadosCalendario');
 
-        // Configuración
         const configTarifaDiurna = $('configTarifaDiurna');
         const configTarifaNocturna = $('configTarifaNocturna');
         const configBaseLunJue = $('configBaseLunJue');
@@ -2187,20 +2310,26 @@
         const btnGuardarTarifaNocturna = $('btnGuardarTarifaNocturna');
         const btnGuardarHorarioBase = $('btnGuardarHorarioBase');
 
-        // Reportes
+        // Nuevos elementos para gestión de trabajadores
+        const nuevoCodigo = $('nuevoCodigo');
+        const nuevoNombre = $('nuevoNombre');
+        const nuevoCargo = $('nuevoCargo');
+        const nuevoSalario = $('nuevoSalario');
+        const nuevoFechaIngreso = $('nuevoFechaIngreso');
+        const btnAgregarTrabajador = $('btnAgregarTrabajador');
+        const listaTrabajadoresConfig = $('listaTrabajadoresConfig');
+
         const reporteDesde = $('reporteDesde');
         const reporteHasta = $('reporteHasta');
         const btnGenerarPDF = $('btnGenerarPDF');
         const btnGenerarCSV = $('btnGenerarCSV');
         const reportePreview = $('reportePreview');
 
-        // Boleta
         const boletaDiurnas = $('boletaDiurnas');
         const boletaNocturnas = $('boletaNocturnas');
         const btnCompararBoleta = $('btnCompararBoleta');
         const resultadoComparacion = $('resultadoComparacion');
 
-        // Backups
         const btnExportarTXT = $('btnExportarTXT');
         const btnExportarImagen = $('btnExportarImagen');
         const btnExportarBackup = $('btnExportarBackup');
@@ -2276,6 +2405,16 @@
             return estado.trabajadores.find(t => t.codigo === codigo);
         }
 
+        function obtenerTrabajadorActivo(codigo) {
+            const t = obtenerTrabajador(codigo);
+            if (t && t.activo !== false) return t;
+            return null;
+        }
+
+        function getTrabajadoresActivos() {
+            return estado.trabajadores.filter(t => t.activo !== false);
+        }
+
         function calcularSalarioBase(trabajador) {
             const base = trabajador.salarioBase || 0;
             const diario = base / 30;
@@ -2344,75 +2483,38 @@
         }
 
         // ======================================================================
-        //  RELOJ Y FECHA EN TIEMPO REAL (solo en el header)
+        //  MENÚ HAMBURGUESA (siempre visible)
         // ======================================================================
 
-        function actualizarRelojYFecha() {
-            const ahora = new Date();
-            const horas = ahora.getHours();
-            const minutos = ahora.getMinutes();
-            const ampm = horas >= 12 ? 'PM' : 'AM';
-            const h12 = horas % 12 || 12;
-            const horaStr = `${String(h12).padStart(2,'0')}:${String(minutos).padStart(2,'0')} ${ampm}`;
-            relojHeader.textContent = horaStr;
-
-            const fechaStr = formatearFechaLarga(ahora);
-            fechaActualHeader.textContent = fechaStr;
-
-            // También actualizar el título de sección si está en registro
-            const panelActivo = document.querySelector('.tab-panel.activo');
-            if (panelActivo) {
-                const id = panelActivo.id;
-                const emojis = {
-                    'panel-resumen': '📊',
-                    'panel-registro': '✏️',
-                    'panel-horas': '📋',
-                    'panel-boleta': '🧾',
-                    'panel-reportes': '📈',
-                    'panel-finanzas': '💰',
-                    'panel-calendario': '📅',
-                    'panel-configuracion': '⚙️',
-                    'panel-backups': '💾'
-                };
-                const nombres = {
-                    'panel-resumen': 'Resumen',
-                    'panel-registro': 'Registro',
-                    'panel-horas': 'Horas',
-                    'panel-boleta': 'Boleta',
-                    'panel-reportes': 'Reportes',
-                    'panel-finanzas': 'Finanzas',
-                    'panel-calendario': 'Calendario',
-                    'panel-configuracion': 'Configuración',
-                    'panel-backups': 'Backups'
-                };
-                const emoji = emojis[id] || '📋';
-                const nombre = nombres[id] || 'Sección';
-                tituloSeccion.innerHTML = `<span>${emoji}</span> ${nombre}`;
-            }
-        }
-
-        // ======================================================================
-        //  MENÚ HAMBURGUESA
-        // ======================================================================
+        let menuAbierto = false;
+        const isMobile = () => window.innerWidth < 768;
 
         function toggleMenu(abrir) {
             if (abrir === undefined) {
-                const estaAbierto = sidebar.classList.contains('abierto');
-                abrir = !estaAbierto;
+                menuAbierto = !menuAbierto;
+            } else {
+                menuAbierto = abrir;
             }
-            if (abrir) {
+
+            if (menuAbierto) {
                 sidebar.classList.add('abierto');
-                sidebarOverlay.classList.add('visible');
-                document.body.style.overflow = 'hidden';
+                sidebar.classList.remove('cerrado');
+                if (isMobile()) {
+                    sidebarOverlay.classList.add('visible');
+                    document.body.style.overflow = 'hidden';
+                }
+                mainContent.style.marginLeft = isMobile() ? '0' : '280px';
             } else {
                 sidebar.classList.remove('abierto');
+                sidebar.classList.add('cerrado');
                 sidebarOverlay.classList.remove('visible');
                 document.body.style.overflow = '';
+                mainContent.style.marginLeft = isMobile() ? '0' : '0';
             }
         }
 
         function cerrarMenu() {
-            toggleMenu(false);
+            if (menuAbierto) toggleMenu(false);
         }
 
         // ======================================================================
@@ -2462,6 +2564,53 @@
         }
 
         // ======================================================================
+        //  RELOJ Y FECHA EN TIEMPO REAL
+        // ======================================================================
+
+        function actualizarRelojYFecha() {
+            const ahora = new Date();
+            const horas = ahora.getHours();
+            const minutos = ahora.getMinutes();
+            const ampm = horas >= 12 ? 'PM' : 'AM';
+            const h12 = horas % 12 || 12;
+            const horaStr = `${String(h12).padStart(2,'0')}:${String(minutos).padStart(2,'0')} ${ampm}`;
+            relojHeader.textContent = horaStr;
+
+            const fechaStr = formatearFechaLarga(ahora);
+            fechaActualHeader.textContent = fechaStr;
+
+            const panelActivo = document.querySelector('.tab-panel.activo');
+            if (panelActivo) {
+                const id = panelActivo.id;
+                const emojis = {
+                    'panel-resumen': '📊',
+                    'panel-registro': '✏️',
+                    'panel-horas': '📋',
+                    'panel-boleta': '🧾',
+                    'panel-reportes': '📈',
+                    'panel-finanzas': '💰',
+                    'panel-calendario': '📅',
+                    'panel-configuracion': '⚙️',
+                    'panel-backups': '💾'
+                };
+                const nombres = {
+                    'panel-resumen': 'Resumen',
+                    'panel-registro': 'Registro',
+                    'panel-horas': 'Horas',
+                    'panel-boleta': 'Boleta',
+                    'panel-reportes': 'Reportes',
+                    'panel-finanzas': 'Finanzas',
+                    'panel-calendario': 'Calendario',
+                    'panel-configuracion': 'Configuración',
+                    'panel-backups': 'Backups'
+                };
+                const emoji = emojis[id] || '📋';
+                const nombre = nombres[id] || 'Sección';
+                tituloSeccion.innerHTML = `<span>${emoji}</span> ${nombre}`;
+            }
+        }
+
+        // ======================================================================
         //  MODO
         // ======================================================================
 
@@ -2471,6 +2620,124 @@
             const btns = document.querySelectorAll('#selectorModo button');
             btns.forEach(b => b.classList.toggle('activo', b.dataset.modo === modo));
             guardarEnLocalStorage();
+        }
+
+        // ======================================================================
+        //  GESTIÓN DE TRABAJADORES
+        // ======================================================================
+
+        function agregarTrabajador() {
+            const codigo = nuevoCodigo.value.trim();
+            const nombre = nuevoNombre.value.trim();
+            const cargo = nuevoCargo.value.trim();
+            const salarioBase = parseFloat(nuevoSalario.value) || 0;
+            const fechaIngreso = nuevoFechaIngreso.value || new Date().toISOString().split('T')[0];
+
+            if (!codigo) { mostrarNotificacion('El código es obligatorio.', 'error'); return; }
+            if (!nombre) { mostrarNotificacion('El nombre es obligatorio.', 'error'); return; }
+            if (!cargo) { mostrarNotificacion('El cargo es obligatorio.', 'error'); return; }
+
+            // Verificar que el código no exista
+            if (estado.trabajadores.some(t => t.codigo === codigo)) {
+                mostrarNotificacion(`El código ${codigo} ya existe.`, 'error');
+                return;
+            }
+
+            const nuevo = {
+                codigo: codigo,
+                nombre: nombre,
+                cargo: cargo,
+                salarioBase: salarioBase,
+                fechaIngreso: fechaIngreso,
+                activo: true
+            };
+
+            estado.trabajadores.push(nuevo);
+            guardarTrabajadores();
+            guardarEnLocalStorage();
+
+            // Limpiar formulario
+            nuevoCodigo.value = '';
+            nuevoNombre.value = '';
+            nuevoCargo.value = '';
+            nuevoSalario.value = '408.80';
+            nuevoFechaIngreso.value = '';
+
+            mostrarNotificacion(`Trabajador ${nombre} agregado correctamente.`, 'success');
+            actualizarTodosLosSelectores();
+            renderizarListaTrabajadoresConfig();
+            actualizarResumen();
+            renderizarListaRegistrosHoras();
+            actualizarFinanzas();
+        }
+
+        function eliminarTrabajador(codigo) {
+            const t = obtenerTrabajador(codigo);
+            if (!t) return;
+
+            if (!confirm(`¿Eliminar a ${t.nombre} (${codigo})?\nLos registros de horas se mantendrán.`)) return;
+
+            // Marcar como inactivo en lugar de eliminar (para conservar registros)
+            t.activo = false;
+            guardarTrabajadores();
+            guardarEnLocalStorage();
+
+            // Si el trabajador estaba seleccionado, limpiar selección
+            if (estado.trabajadorSeleccionado === codigo) {
+                estado.trabajadorSeleccionado = null;
+            }
+            if (estado.finanzasTrabajadorSeleccionado === codigo) {
+                estado.finanzasTrabajadorSeleccionado = null;
+            }
+
+            mostrarNotificacion(`Trabajador ${t.nombre} eliminado.`, 'info');
+            actualizarTodosLosSelectores();
+            renderizarListaTrabajadoresConfig();
+            actualizarResumen();
+            renderizarListaRegistrosHoras();
+            actualizarFinanzas();
+        }
+
+        function actualizarTodosLosSelectores() {
+            renderizarTrabajadores();
+            renderizarTrabajadoresFinanzas();
+            renderizarListaTrabajadoresConfig();
+            renderizarListaRegistrosHoras();
+            actualizarResumen();
+            actualizarFinanzas();
+        }
+
+        function renderizarListaTrabajadoresConfig() {
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+
+            if (ordenados.length === 0) {
+                listaTrabajadoresConfig.innerHTML = `<p style="color:#8a8aaa;">No hay trabajadores activos.</p>`;
+                return;
+            }
+
+            let html = '';
+            ordenados.forEach(t => {
+                const fecha = t.fechaIngreso ? formatearFechaConDia(t.fechaIngreso) : 'No registrada';
+                html += `<div class="trabajador-item">
+                    <div class="info">
+                        <span class="codigo">${t.codigo}</span>
+                        <span class="nombre">${t.nombre}</span>
+                        <span class="cargo">${t.cargo}</span>
+                        <span class="salario">$${t.salarioBase.toFixed(2)}</span>
+                        <span class="fechaIngreso">Ingreso: ${fecha}</span>
+                    </div>
+                    <button class="btn btn-sm btn-limpiar" data-eliminar="${t.codigo}">Eliminar</button>
+                </div>`;
+            });
+
+            listaTrabajadoresConfig.innerHTML = html;
+
+            listaTrabajadoresConfig.querySelectorAll('[data-eliminar]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    eliminarTrabajador(this.dataset.eliminar);
+                });
+            });
         }
 
         // ======================================================================
@@ -2490,7 +2757,12 @@
                 panels.forEach(p => p.classList.remove('activo'));
                 const panel = document.getElementById(`panel-${tab}`);
                 if (panel) panel.classList.add('activo');
-                cerrarMenu();
+
+                // Cerrar menú en móvil
+                if (isMobile()) {
+                    cerrarMenu();
+                }
+
                 actualizarRelojYFecha();
                 if (tab === 'resumen') { actualizarResumen();
                     actualizarPagoCountdown(); }
@@ -2498,9 +2770,12 @@
                 if (tab === 'boleta') actualizarComparacion();
                 if (tab === 'backups') renderizarListaBackups();
                 if (tab === 'reportes') cargarReportes();
-                if (tab === 'configuracion') { cargarConfiguracion();
+                if (tab === 'configuracion') {
+                    cargarConfiguracion();
                     cargarSalariosConfig();
-                    cargarFechasIngresoConfig(); }
+                    cargarFechasIngresoConfig();
+                    renderizarListaTrabajadoresConfig();
+                }
                 if (tab === 'finanzas') actualizarFinanzas();
                 if (tab === 'calendario') { renderizarFeriados();
                     renderizarProximosFeriados(); }
@@ -2508,6 +2783,11 @@
 
             sidebarOverlay.addEventListener('click', cerrarMenu);
             hamburgerBtn.addEventListener('click', () => toggleMenu());
+
+            // En pantallas grandes, abrir menú por defecto
+            if (!isMobile()) {
+                toggleMenu(true);
+            }
         }
 
         // ======================================================================
@@ -2516,7 +2796,14 @@
 
         function renderizarTrabajadores() {
             selectorTrabajador.innerHTML = '';
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+
+            if (ordenados.length === 0) {
+                selectorTrabajador.innerHTML = `<p style="color:#8a8aaa;">No hay trabajadores activos.</p>`;
+                return;
+            }
+
             ordenados.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'trabajador-boton';
@@ -2545,7 +2832,14 @@
 
         function renderizarTrabajadoresFinanzas() {
             selectorFinanzasTrabajador.innerHTML = '';
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+
+            if (ordenados.length === 0) {
+                selectorFinanzasTrabajador.innerHTML = `<p style="color:#8a8aaa;">No hay trabajadores activos.</p>`;
+                return;
+            }
+
             ordenados.forEach(t => {
                 const div = document.createElement('div');
                 div.className = 'trabajador-boton';
@@ -2812,7 +3106,8 @@
                 return;
             }
 
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             let html = '';
 
             ordenados.forEach(t => {
@@ -2859,11 +3154,57 @@
                 html += `</div>`;
             });
 
+            // También mostrar registros de trabajadores inactivos (si los hay)
+            const inactivos = estado.trabajadores.filter(t => t.activo === false);
+            inactivos.forEach(t => {
+                const regs = estado.registros.filter(r => r.trabajador === t.codigo)
+                    .sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+                if (regs.length === 0) return;
+
+                let totalDiurnas = 0,
+                    totalNocturnas = 0,
+                    totalMonto = 0;
+
+                html += `<div class="worker-card" style="opacity:0.6;">`;
+                html += `<div class="header">
+                    <span class="nombre">${t.nombre} (ELIMINADO)</span>
+                    <span class="codigo-area">Código ${t.codigo} · ${t.cargo}</span>
+                </div>`;
+
+                html += `<div class="registros">`;
+                regs.forEach(r => {
+                    const fechaForm = formatearFechaConDia(r.fecha);
+                    totalDiurnas += r.diurnas || 0;
+                    totalNocturnas += r.nocturnas || 0;
+                    totalMonto += r.montoTotal || 0;
+
+                    html += `<div class="registro-dia">
+                        <span class="fecha">${fechaForm}</span>
+                        <span>${r.entrada} - ${r.salida}</span>
+                        <span class="tipo">Diurnas: ${(r.diurnas||0).toFixed(1)}h</span>
+                        <span class="tipo">Nocturnas: ${(r.nocturnas||0).toFixed(1)}h</span>
+                        <span><strong>${(r.total||0).toFixed(1)}h</strong></span>
+                        <span class="monto">$${(r.montoTotal||0).toFixed(2)}</span>
+                    </div>`;
+                });
+                html += `</div>`;
+
+                html += `<div class="resumen-quincena">
+                    <span>Diurnas: ${totalDiurnas.toFixed(1)}h</span>
+                    <span>Nocturnas: ${totalNocturnas.toFixed(1)}h</span>
+                    <span>Total: ${(totalDiurnas+totalNocturnas).toFixed(1)}h</span>
+                    <span class="total-monto">Monto: $${totalMonto.toFixed(2)}</span>
+                </div>`;
+
+                html += `</div>`;
+            });
+
             listaRegistrosHoras.innerHTML = html || `<p style="color:#8a8aaa;">No hay registros.</p>`;
         }
 
         // ======================================================================
-        //  RESUMEN (antes Dashboard)
+        //  RESUMEN
         // ======================================================================
 
         function actualizarResumen() {
@@ -2872,7 +3213,6 @@
             const hoy = new Date();
             const hoyStr = hoy.toISOString().split('T')[0];
 
-            // Días de la quincena
             if (apertura && cierre) {
                 const inicio = new Date(apertura + 'T00:00:00');
                 const fin = new Date(cierre + 'T00:00:00');
@@ -2883,19 +3223,18 @@
                 statDiasQuincena.textContent = '0/0';
             }
 
-            // Trabajadores activos
             const hace7dias = new Date(hoy);
             hace7dias.setDate(hace7dias.getDate() - 7);
             const limite7dias = hace7dias.toISOString().split('T')[0];
-            let activos = 0;
-            estado.trabajadores.forEach(t => {
+            const activos = getTrabajadoresActivos();
+            let trabajadoresActivos = 0;
+            activos.forEach(t => {
                 const regs = estado.registros.filter(r => r.trabajador === t.codigo && r.fecha >= limite7dias && r
                     .fecha <= hoyStr);
-                if (regs.length > 0) activos++;
+                if (regs.length > 0) trabajadoresActivos++;
             });
-            statTrabajadoresActivos.textContent = activos;
+            statTrabajadoresActivos.textContent = trabajadoresActivos;
 
-            // Registros pendientes
             let pendientes = 0;
             if (apertura && cierre) {
                 const inicio = new Date(apertura + 'T00:00:00');
@@ -2904,7 +3243,7 @@
                 const diasTranscurridos = Math.min(Math.max(0, Math.ceil((hoy - inicio) / (1000 * 60 * 60 * 24)) + 1),
                     totalDias);
                 const diasHastaHoy = Math.min(diasTranscurridos, totalDias);
-                estado.trabajadores.forEach(t => {
+                activos.forEach(t => {
                     let diasLaborados = 0;
                     let diasLaborables = 0;
                     for (let d = 0; d < diasHastaHoy; d++) {
@@ -2925,7 +3264,6 @@
             }
             statRegistrosPendientes.textContent = pendientes;
 
-            // Horas extras en la quincena
             let horasQuincena = 0;
             if (apertura && cierre) {
                 estado.registros.forEach(r => {
@@ -2936,7 +3274,6 @@
             }
             statHorasExtrasQuincena.textContent = horasQuincena.toFixed(1);
 
-            // Últimos registros
             const ultimos = [...estado.registros].reverse().slice(0, 5);
             if (ultimos.length === 0) {
                 ultimosRegistrosResumen.innerHTML = `<p style="color:#8a8aaa;">No hay registros.</p>`;
@@ -2973,7 +3310,8 @@
                 return;
             }
 
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             let html = '';
 
             ordenados.forEach(t => {
@@ -3120,7 +3458,6 @@
             hoy.setHours(0, 0, 0, 0);
             let html = '';
             const feriados = estado.config.feriados || FERIADOS_2026;
-            // Ordenar por fecha
             const ordenados = [...feriados].sort((a, b) => a.fecha.localeCompare(b.fecha));
             ordenados.forEach(f => {
                 const fechaObj = new Date(f.fecha + 'T00:00:00');
@@ -3471,7 +3808,8 @@
 
         function cargarSalariosConfig() {
             let html = '';
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             ordenados.forEach(t => {
                 html += `<div class="config-item">
                     <span class="label">${t.nombre} (${t.codigo})</span>
@@ -3488,9 +3826,11 @@
                     const t = obtenerTrabajador(codigo);
                     if (t) {
                         t.salarioBase = val;
+                        guardarTrabajadores();
                         guardarEnLocalStorage();
                         mostrarNotificacion(`Salario de ${t.nombre} actualizado a $${val.toFixed(2)}.`, 'success');
                         if (estado.finanzasTrabajadorSeleccionado === codigo) actualizarFinanzas();
+                        renderizarListaTrabajadoresConfig();
                     }
                 });
             });
@@ -3498,7 +3838,8 @@
 
         function cargarFechasIngresoConfig() {
             let html = '';
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             ordenados.forEach(t => {
                 html += `<div class="config-item">
                     <span class="label">${t.nombre} (${t.codigo})</span>
@@ -3515,8 +3856,10 @@
                     const t = obtenerTrabajador(codigo);
                     if (t) {
                         t.fechaIngreso = val;
+                        guardarTrabajadores();
                         guardarEnLocalStorage();
                         mostrarNotificacion(`Fecha de ingreso de ${t.nombre} actualizada.`, 'success');
+                        renderizarListaTrabajadoresConfig();
                     }
                 });
             });
@@ -3577,9 +3920,7 @@
         function exportarPDF() {
             const data = generarReporte();
             if (!data || data.registros.length === 0) return;
-            // Usamos window.open para generar el PDF con jsPDF (ya incluido vía CDN)
             if (typeof window.jspdf === 'undefined') {
-                // Cargar jsPDF dinámicamente
                 const script = document.createElement('script');
                 script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
                 script.onload = () => generarPDFConJSPDF(data);
@@ -3692,7 +4033,8 @@
                     config: estado.config,
                     logEdiciones: estado.logEdiciones,
                     cafeteria: estado.cafeteria,
-                    prestamos: estado.prestamos
+                    prestamos: estado.prestamos,
+                    trabajadores: estado.trabajadores
                 }))
             };
             estado.backups.push(backup);
@@ -3725,10 +4067,15 @@
                     estado.logEdiciones = backup.datos.logEdiciones || [];
                     estado.cafeteria = backup.datos.cafeteria || {};
                     estado.prestamos = backup.datos.prestamos || {};
+                    if (backup.datos.trabajadores) {
+                        estado.trabajadores = backup.datos.trabajadores;
+                        guardarTrabajadores();
+                    }
                     guardarEnLocalStorage();
                     renderizarListaRegistrosHoras();
                     renderizarListaBackups();
                     actualizarResumen();
+                    actualizarTodosLosSelectores();
                     mostrarNotificacion(`Backup restaurado: ${backup.nombre || 'sin nombre'}`, 'success');
                 } catch (err) {
                     mostrarNotificacion('Error al leer el backup.', 'error');
@@ -3765,10 +4112,15 @@
                         estado.logEdiciones = backup.datos.logEdiciones || [];
                         estado.cafeteria = backup.datos.cafeteria || {};
                         estado.prestamos = backup.datos.prestamos || {};
+                        if (backup.datos.trabajadores) {
+                            estado.trabajadores = backup.datos.trabajadores;
+                            guardarTrabajadores();
+                        }
                         guardarEnLocalStorage();
                         renderizarListaRegistrosHoras();
                         renderizarListaBackups();
                         actualizarResumen();
+                        actualizarTodosLosSelectores();
                         mostrarNotificacion(`Restaurado: ${backup.nombre}`, 'success');
                     }
                 });
@@ -3800,7 +4152,8 @@
             let texto = `RESUMEN DE HORAS EXTRAS\n`;
             texto += `Quincena: ${apertura} al ${cierre}\n`;
             texto += `Fecha de exportación: ${new Date().toLocaleString()}\n\n`;
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             ordenados.forEach(t => {
                 const regs = estado.registros.filter(r => r.trabajador === t.codigo && r.fecha >= apertura && r
                     .fecha <= cierre);
@@ -3864,7 +4217,8 @@
             let y = 110;
             ctx.textAlign = 'left';
             ctx.font = '15px sans-serif';
-            const ordenados = [...estado.trabajadores].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
+            const activos = getTrabajadoresActivos();
+            const ordenados = [...activos].sort((a, b) => parseInt(a.codigo) - parseInt(b.codigo));
             ordenados.forEach(t => {
                 const regs = estado.registros.filter(r => r.trabajador === t.codigo && r.fecha >= apertura && r
                     .fecha <= cierre);
@@ -3907,7 +4261,6 @@
         // ======================================================================
 
         function cargarQuincenaActual() {
-            // Si no hay quincena, establecer la actual por defecto
             if (!estado.quincenaActual.apertura || !estado.quincenaActual.cierre) {
                 const hoy = new Date();
                 const year = hoy.getFullYear();
@@ -3957,14 +4310,6 @@
         }
 
         // ======================================================================
-        //  VERIFICAR REGISTROS RECIENTES
-        // ======================================================================
-
-        function verificarRegistrosRecientes() {
-            // Función opcional, no se usa en la versión final para evitar spam
-        }
-
-        // ======================================================================
         //  EVENTOS
         // ======================================================================
 
@@ -3975,7 +4320,7 @@
                 aplicarModo(btn.dataset.modo);
             });
 
-            document.querySelectorAll('.hora-selector .btn-hora').forEach(btn => {
+            document.querySelectorAll('.hora-row .btn-hora').forEach(btn => {
                 btn.addEventListener('click', function() {
                     const delta = parseInt(this.dataset.ajuste);
                     const target = this.dataset.target;
@@ -3998,9 +4343,6 @@
             btnGuardar.addEventListener('click', guardarRegistro);
             btnLimpiar.addEventListener('click', limpiarFormulario);
             btnCopiarTurno.addEventListener('click', copiarTurno);
-
-            // Botón para guardar quincena (no visible en la UI actual, pero se puede agregar)
-            // Lo dejamos como función interna
 
             btnCompararBoleta.addEventListener('click', actualizarComparacion);
 
@@ -4034,8 +4376,10 @@
                 const t = obtenerTrabajador(codigo);
                 if (t) {
                     t.salarioBase = val;
+                    guardarTrabajadores();
                     guardarEnLocalStorage();
                     actualizarFinanzas();
+                    renderizarListaTrabajadoresConfig();
                     mostrarNotificacion(`Salario actualizado a $${val.toFixed(2)}.`, 'success');
                 }
             });
@@ -4067,7 +4411,19 @@
                 cafeteriaTotal.textContent = `$${(dias * 1.60).toFixed(2)}`;
             });
 
-            // Fecha por defecto
+            // Agregar trabajador
+            btnAgregarTrabajador.addEventListener('click', agregarTrabajador);
+
+            // Enter para agregar trabajador
+            document.querySelectorAll('#formNuevoTrabajador input').forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        agregarTrabajador();
+                    }
+                });
+            });
+
             const hoy = new Date().toISOString().split('T')[0];
             fechaTurno.value = hoy;
             actualizarFechaConDia();
@@ -4075,17 +4431,25 @@
             cargarReportes();
             generarReporte();
 
-            // Reloj en tiempo real
             setInterval(actualizarRelojYFecha, 1000);
             actualizarRelojYFecha();
 
-            // Quincena inicial
             cargarQuincenaActual();
             actualizarResumen();
             renderizarListaRegistrosHoras();
             renderizarFeriados();
             renderizarProximosFeriados();
             actualizarPagoCountdown();
+
+            // Cargar trabajadores desde localStorage
+            cargarTrabajadores();
+            actualizarTodosLosSelectores();
+            renderizarListaTrabajadoresConfig();
+
+            // Configurar el estado inicial del menú
+            if (!isMobile()) {
+                toggleMenu(true);
+            }
         }
 
         function actualizarFechaConDia() {
@@ -4101,6 +4465,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             cargarDesdeLocalStorage();
+            cargarTrabajadores();
             aplicarModo(estado.config.modo);
             renderizarTrabajadores();
             renderizarTrabajadoresFinanzas();
@@ -4109,13 +4474,13 @@
             cargarConfiguracion();
             if (estado.trabajadorSeleccionado) {
                 seleccionarTrabajador(estado.trabajadorSeleccionado);
-            } else if (estado.trabajadores.length > 0) {
-                seleccionarTrabajador(estado.trabajadores[0].codigo);
+            } else if (getTrabajadoresActivos().length > 0) {
+                seleccionarTrabajador(getTrabajadoresActivos()[0].codigo);
             }
             if (estado.finanzasTrabajadorSeleccionado) {
                 seleccionarFinanzasTrabajador(estado.finanzasTrabajadorSeleccionado);
-            } else if (estado.trabajadores.length > 0) {
-                seleccionarFinanzasTrabajador(estado.trabajadores[0].codigo);
+            } else if (getTrabajadoresActivos().length > 0) {
+                seleccionarFinanzasTrabajador(getTrabajadoresActivos()[0].codigo);
             }
             cargarSalariosConfig();
             cargarFechasIngresoConfig();
@@ -4130,6 +4495,7 @@
             renderizarProximosFeriados();
             actualizarFinanzas();
             actualizarPagoCountdown();
+            renderizarListaTrabajadoresConfig();
         });
     </script>
 </body>
